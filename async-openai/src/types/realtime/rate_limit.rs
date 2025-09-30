@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RateLimit {
     /// The name of the rate limit ("requests", "tokens", "input_tokens", "output_tokens").
     pub name: String,

@@ -9,6 +9,7 @@ use crate::error::OpenAIError;
 use super::{ChatCompletionStreamOptions, Choice, CompletionUsage, Prompt, Stop};
 
 #[derive(Clone, Serialize, Deserialize, Default, Debug, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateCompletionRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -116,6 +117,7 @@ pub struct CreateCompletionRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateCompletionResponse {
     /// A unique identifier for the completion.
     pub id: String,

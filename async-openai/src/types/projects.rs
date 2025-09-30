@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// `active` or `archived`
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ProjectStatus {
     Active,
@@ -12,6 +13,7 @@ pub enum ProjectStatus {
 
 /// Represents an individual project.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Project {
     /// The identifier, which can be referenced in API endpoints
     pub id: String,
@@ -29,6 +31,7 @@ pub struct Project {
 
 /// A list of Project objects.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectListResponse {
     pub object: String,
     pub data: Vec<Project>,
@@ -39,6 +42,7 @@ pub struct ProjectListResponse {
 
 /// The project create request payload.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ProjectCreateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -51,6 +55,7 @@ pub struct ProjectCreateRequest {
 
 /// The project update request payload.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ProjectUpdateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]

@@ -11,6 +11,7 @@ pub enum InputSource {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum OrganizationRole {
     Owner,

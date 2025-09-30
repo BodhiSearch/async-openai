@@ -11,6 +11,7 @@ pub struct AudioInput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum AudioResponseFormat {
     #[default]
@@ -22,6 +23,7 @@ pub enum AudioResponseFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum SpeechResponseFormat {
     #[default]
@@ -34,6 +36,7 @@ pub enum SpeechResponseFormat {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 #[non_exhaustive]
 pub enum Voice {
@@ -51,6 +54,7 @@ pub enum Voice {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum SpeechModel {
     #[default]
     #[serde(rename = "tts-1")]
@@ -62,6 +66,7 @@ pub enum SpeechModel {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum TimestampGranularity {
     Word,
@@ -101,6 +106,7 @@ pub struct CreateTranscriptionRequest {
 /// Represents a transcription response returned by model, based on the provided
 /// input.
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranscriptionResponseJson {
     /// The transcribed text.
     pub text: String,
@@ -109,6 +115,7 @@ pub struct CreateTranscriptionResponseJson {
 /// Represents a verbose json transcription response returned by model, based on
 /// the provided input.
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranscriptionResponseVerboseJson {
     /// The language of the input audio.
     pub language: String,
@@ -129,6 +136,7 @@ pub struct CreateTranscriptionResponseVerboseJson {
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionWord {
     /// The text content of the word.
     pub word: String,
@@ -141,6 +149,7 @@ pub struct TranscriptionWord {
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionSegment {
     /// Unique identifier of the segment.
     pub id: i32,
@@ -177,6 +186,7 @@ pub struct TranscriptionSegment {
 }
 
 #[derive(Clone, Default, Debug, Builder, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateSpeechRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -233,11 +243,13 @@ pub struct CreateTranslationRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranslationResponseJson {
     pub text: String,
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranslationResponseVerboseJson {
     /// The language of the output translation (always `english`).
     pub language: String,

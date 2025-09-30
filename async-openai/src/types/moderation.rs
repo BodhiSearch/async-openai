@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::OpenAIError;
 
 #[derive(Debug, Serialize, Clone, PartialEq, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum ModerationInput {
     /// A single string of text to classify for moderation
@@ -18,6 +19,7 @@ pub enum ModerationInput {
 
 /// Content part for multi-modal moderation input
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ModerationContentPart {
     /// An object describing text to classify
@@ -37,12 +39,14 @@ pub enum ModerationContentPart {
 
 /// Image URL configuration for image moderation
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ModerationImageUrl {
     /// Either a URL of the image or the base64 encoded image data
     pub url: String,
 }
 
 #[derive(Debug, Default, Clone, Serialize, Builder, PartialEq, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateModerationRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -61,6 +65,7 @@ pub struct CreateModerationRequest {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Category {
     /// Content that expresses, incites, or promotes hate based on race, gender,
     /// ethnicity, religion, nationality, sexual orientation, disability status, or
@@ -105,6 +110,7 @@ pub struct Category {
 
 /// A list of the categories along with their scores as predicted by model.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CategoryScore {
     /// The score for the category 'hate'.
     pub hate: f32,
@@ -143,6 +149,7 @@ pub struct CategoryScore {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContentModerationResult {
     /// Whether any of the below categories are flagged.
     pub flagged: bool,
@@ -156,6 +163,7 @@ pub struct ContentModerationResult {
 
 /// Represents if a given text input is potentially harmful.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateModerationResponse {
     /// The unique identifier for the moderation request.
     pub id: String,
@@ -167,6 +175,7 @@ pub struct CreateModerationResponse {
 
 /// A list of the categories along with the input type(s) that the score applies to.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CategoryAppliedInputTypes {
     /// The applied input type(s) for the category 'hate'.
     pub hate: Vec<ModInputType>,
@@ -218,6 +227,7 @@ pub struct CategoryAppliedInputTypes {
 
 /// The type of input that was moderated
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ModInputType {
     /// Text content that was moderated

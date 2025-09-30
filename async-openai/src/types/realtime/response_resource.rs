@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use super::item::Item;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct Usage {
     pub total_tokens: u32,
     pub input_tokens: u32,
@@ -10,6 +11,7 @@ pub struct Usage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ResponseStatus {
     InProgress,
@@ -20,12 +22,14 @@ pub enum ResponseStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct FailedError {
     pub code: String,
     pub message: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum IncompleteReason {
     Interruption,
@@ -34,6 +38,7 @@ pub enum IncompleteReason {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ResponseStatusDetail {
     #[serde(rename = "incomplete")]
@@ -45,6 +50,7 @@ pub enum ResponseStatusDetail {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseResource {
     /// The unique ID of the response.
     pub id: String,

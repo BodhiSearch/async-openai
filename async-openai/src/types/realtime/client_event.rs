@@ -4,6 +4,7 @@ use tokio_tungstenite::tungstenite::Message;
 use super::{item::Item, session_resource::SessionResource};
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct SessionUpdateEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -13,6 +14,7 @@ pub struct SessionUpdateEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct InputAudioBufferAppendEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -22,6 +24,7 @@ pub struct InputAudioBufferAppendEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct InputAudioBufferCommitEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +32,7 @@ pub struct InputAudioBufferCommitEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct InputAudioBufferClearEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -36,6 +40,7 @@ pub struct InputAudioBufferClearEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ConversationItemCreateEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -50,6 +55,7 @@ pub struct ConversationItemCreateEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ConversationItemTruncateEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -66,6 +72,7 @@ pub struct ConversationItemTruncateEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ConversationItemDeleteEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -76,6 +83,7 @@ pub struct ConversationItemDeleteEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCreateEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -86,6 +94,7 @@ pub struct ResponseCreateEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCancelEvent {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -94,6 +103,7 @@ pub struct ResponseCancelEvent {
 
 /// These are events that the OpenAI Realtime WebSocket server will accept from the client.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ClientEvent {
     /// Send this event to update the session’s default configuration.

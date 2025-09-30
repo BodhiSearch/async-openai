@@ -6,6 +6,7 @@ use super::OrganizationRole;
 
 /// Represents an individual `user` within an organization.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct User {
     /// The object type, which is always `organization.user`
     pub object: String,
@@ -23,6 +24,7 @@ pub struct User {
 
 /// A list of `User` objects.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UserListResponse {
     pub object: String,
     pub data: Vec<User>,
@@ -32,6 +34,7 @@ pub struct UserListResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UserRoleUpdateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -44,6 +47,7 @@ pub struct UserRoleUpdateRequest {
 
 /// Confirmation of the deleted user
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UserDeleteResponse {
     pub object: String,
     pub id: String,

@@ -6,6 +6,7 @@ use super::{InputSource, OpenAIFile};
 
 /// Request to create an upload object that can accept byte chunks in the form of Parts.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateUploadRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -32,6 +33,7 @@ pub struct CreateUploadRequest {
 
 /// The intended purpose of the uploaded file.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum UploadPurpose {
     /// For use with Assistants and Message files
@@ -47,6 +49,7 @@ pub enum UploadPurpose {
 
 /// The Upload object can accept byte chunks in the form of Parts.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct Upload {
     /// The Upload unique identifier, which can be referenced in API endpoints
     pub id: String,
@@ -79,6 +82,7 @@ pub struct Upload {
 
 /// The status of an upload
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum UploadStatus {
     /// Upload is pending
@@ -93,6 +97,7 @@ pub enum UploadStatus {
 
 /// The upload Part represents a chunk of bytes we can add to an Upload object.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UploadPart {
     /// The upload Part unique identifier, which can be referenced in API endpoints
     pub id: String,
@@ -116,6 +121,7 @@ pub struct AddUploadPartRequest {
 
 /// Request parameters for completing an Upload
 #[derive(Debug, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CompleteUploadRequest {
     /// The ordered list of Part IDs
     pub part_ids: Vec<String>,

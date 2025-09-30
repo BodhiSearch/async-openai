@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Represents an individual user in a project.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectUser {
     /// The object type, which is always `organization.project.user`
     pub object: String,
@@ -21,6 +22,7 @@ pub struct ProjectUser {
 
 /// `owner` or `member`
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ProjectUserRole {
     Owner,
@@ -28,6 +30,7 @@ pub enum ProjectUserRole {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectUserListResponse {
     pub object: String,
     pub data: Vec<ProjectUser>,
@@ -38,6 +41,7 @@ pub struct ProjectUserListResponse {
 
 /// The project user create request payload.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ProjectUserCreateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -51,6 +55,7 @@ pub struct ProjectUserCreateRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ProjectUserUpdateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -62,6 +67,7 @@ pub struct ProjectUserUpdateRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectUserDeleteResponse {
     pub object: String,
     pub id: String,

@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemType {
     Message,
@@ -9,6 +10,7 @@ pub enum ItemType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemStatus {
     Completed,
@@ -17,6 +19,7 @@ pub enum ItemStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ItemRole {
     User,
@@ -25,6 +28,7 @@ pub enum ItemRole {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemContentType {
     InputText,
@@ -34,6 +38,7 @@ pub enum ItemContentType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ItemContent {
     /// The content type ("input_text", "input_audio", "text", "audio").
     pub r#type: ItemContentType,
@@ -52,6 +57,7 @@ pub struct ItemContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct Item {
     /// The unique ID of the item.
     #[serde(skip_serializing_if = "Option::is_none")]

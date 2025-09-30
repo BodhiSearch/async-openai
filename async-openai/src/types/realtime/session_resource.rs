@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub enum AudioFormat {
     #[serde(rename = "pcm16")]
     PCM16,
@@ -11,6 +12,7 @@ pub enum AudioFormat {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AudioTranscription {
     /// The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -26,6 +28,7 @@ pub struct AudioTranscription {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum TurnDetection {
     /// Type of turn detection, only "server_vad" is currently supported.
@@ -67,6 +70,7 @@ pub enum TurnDetection {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub enum MaxResponseOutputTokens {
     #[serde(rename = "inf")]
     Inf,
@@ -75,6 +79,7 @@ pub enum MaxResponseOutputTokens {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ToolDefinition {
     #[serde(rename = "function")]
@@ -89,12 +94,14 @@ pub enum ToolDefinition {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum FunctionType {
     Function,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ToolChoice {
     Auto,
@@ -108,6 +115,7 @@ pub enum ToolChoice {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeVoice {
     Alloy,

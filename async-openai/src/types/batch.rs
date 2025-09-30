@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::OpenAIError;
 
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "BatchRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -30,6 +31,7 @@ pub struct BatchRequest {
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum BatchEndpoint {
     #[default]
     #[serde(rename = "/v1/chat/completions")]
@@ -41,6 +43,7 @@ pub enum BatchEndpoint {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Default, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum BatchCompletionWindow {
     #[default]
     #[serde(rename = "24h")]
@@ -48,6 +51,7 @@ pub enum BatchCompletionWindow {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct Batch {
     pub id: String,
     /// The object type, which is always `batch`.
@@ -90,6 +94,7 @@ pub struct Batch {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchErrors {
     /// The object type, which is always `list`.
     pub object: String,
@@ -97,6 +102,7 @@ pub struct BatchErrors {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchError {
     /// An error code identifying the error type.
     pub code: String,
@@ -109,6 +115,7 @@ pub struct BatchError {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum BatchStatus {
     Validating,
@@ -122,6 +129,7 @@ pub enum BatchStatus {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchRequestCounts {
     /// Total number of requests in the batch.
     pub total: u32,
@@ -132,6 +140,7 @@ pub struct BatchRequestCounts {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListBatchesResponse {
     pub data: Vec<Batch>,
     pub first_id: Option<String>,
@@ -141,6 +150,7 @@ pub struct ListBatchesResponse {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum BatchRequestInputMethod {
     POST,
@@ -148,6 +158,7 @@ pub enum BatchRequestInputMethod {
 
 /// The per-line object of the batch input file
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchRequestInput {
     /// A developer-provided per-request id that will be used to match outputs to inputs. Must be unique for each request in a batch.
     pub custom_id: String,
@@ -159,6 +170,7 @@ pub struct BatchRequestInput {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchRequestOutputResponse {
     /// The HTTP status code of the response
     pub status_code: u16,
@@ -169,6 +181,7 @@ pub struct BatchRequestOutputResponse {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchRequestOutputError {
     /// A machine-readable error code.
     pub code: String,
@@ -178,6 +191,7 @@ pub struct BatchRequestOutputError {
 
 /// The per-line object of the batch output and error files
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct BatchRequestOutput {
     pub id: String,
     /// A developer-provided per-request id that will be used to match outputs to inputs.

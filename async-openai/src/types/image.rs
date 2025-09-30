@@ -6,6 +6,7 @@ use crate::error::OpenAIError;
 use super::InputSource;
 
 #[derive(Default, Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum ImageSize {
     #[serde(rename = "256x256")]
     S256x256,
@@ -21,6 +22,7 @@ pub enum ImageSize {
 }
 
 #[derive(Default, Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum DallE2ImageSize {
     #[serde(rename = "256x256")]
     S256x256,
@@ -32,6 +34,7 @@ pub enum DallE2ImageSize {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageResponseFormat {
     #[default]
@@ -41,6 +44,7 @@ pub enum ImageResponseFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum ImageModel {
     #[default]
     #[serde(rename = "dall-e-2")]
@@ -52,6 +56,7 @@ pub enum ImageModel {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageQuality {
     #[default]
@@ -64,6 +69,7 @@ pub enum ImageQuality {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageStyle {
     #[default]
@@ -72,6 +78,7 @@ pub enum ImageStyle {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageModeration {
     #[default]
@@ -80,6 +87,7 @@ pub enum ImageModeration {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateImageRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
