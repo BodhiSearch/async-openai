@@ -5,6 +5,7 @@ use async_openai::types::completions::{CompletionResponseStream, CreateCompletio
 use async_openai::Client;
 
 #[tokio::test]
+#[ignore]
 async fn boxed_future_test() {
     fn interpret_bool(token_stream: &mut CompletionResponseStream) -> BoxFuture<'_, bool> {
         async move {

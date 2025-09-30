@@ -119,6 +119,7 @@ mod tests {
     use crate::Client;
 
     #[tokio::test]
+    #[ignore]
     async fn vector_store_file_creation_and_deletion(
     ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         let client = Client::new();

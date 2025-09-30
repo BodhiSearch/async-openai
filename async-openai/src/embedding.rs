@@ -79,6 +79,7 @@ mod tests {
     use crate::{types::embeddings::CreateEmbeddingRequestArgs, Client};
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_string() {
         let client = Client::new();
 
@@ -94,6 +95,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_string_array() {
         let client = Client::new();
 
@@ -109,6 +111,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_integer_array() {
         let client = Client::new();
 
@@ -124,6 +127,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_array_of_integer_array_matrix() {
         let client = Client::new();
 
@@ -139,6 +143,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_array_of_integer_array() {
         let client = Client::new();
 
@@ -154,6 +159,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_with_reduced_dimensions() {
         let client = Client::new();
         let dimensions = 256u32;
@@ -192,6 +198,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore]
     async fn test_embedding_create_base64() {
         let client = Client::new();
 

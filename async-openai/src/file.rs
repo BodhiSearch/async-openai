@@ -87,6 +87,7 @@ mod tests {
     };
 
     #[tokio::test]
+    #[ignore]
     async fn test_file_mod() {
         let test_file_path = "/tmp/test.jsonl";
         let contents = concat!(

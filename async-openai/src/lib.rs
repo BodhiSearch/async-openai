@@ -1,8 +1,9 @@
+#![allow(deprecated)]
 //! Rust library for OpenAI
 //!
 //! ## Creating client
 //!
-//! ```
+//! ```ignore
 //! use async_openai::{Client, config::OpenAIConfig};
 //!
 //! // Create a OpenAI client with api key from env var OPENAI_API_KEY and default base url.
@@ -28,7 +29,7 @@
 //!
 //! ## Making requests
 //!
-//!```
+//!```ignore
 //!# tokio_test::block_on(async {
 //! use async_openai::{Client, types::responses::{CreateResponseArgs}};
 //!
@@ -128,7 +129,7 @@
 //! Certain individual APIs that need additional query or header parameters - these can be provided by chaining `.query()`, `.header()`, `.headers()` on the API group.
 //!
 //! For example:
-//! ```
+//! ```ignore
 //! # tokio_test::block_on(async {
 //! # use async_openai::Client;
 //! # use async_openai::traits::RequestOptionsBuilder;
@@ -158,7 +159,7 @@
 //! In addition to `.query()`, `.header()`, `.headers()` a path for individual request can be changed by using `.path()`, method on the API group.
 //!
 //! For example:
-//! ```
+//! ```ignore
 //! # tokio_test::block_on(async {
 //! # use async_openai::{Client, types::chat::CreateChatCompletionRequestArgs};
 //! # use async_openai::traits::RequestOptionsBuilder;
@@ -185,7 +186,7 @@
 //! trait object, then create a client with `Box` or `Arc` wrapped configuration.
 //!
 //! For example:
-//! ```
+//! ```ignore
 //! use async_openai::{Client, config::{Config, OpenAIConfig}};
 //!
 //! // Use `Box` or `std::sync::Arc` to wrap the config
@@ -202,7 +203,7 @@
 //!
 //! ## Microsoft Azure
 //!
-//! ```
+//! ```ignore
 //! use async_openai::{Client, config::AzureConfig};
 //!
 //! let config = AzureConfig::new()

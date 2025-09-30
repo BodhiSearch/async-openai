@@ -1,0 +1,3 @@
+tab_spaces = 4
+# Prevent merging of multiple #[derive(...)] attributes
+merge_derives = false
