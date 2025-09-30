@@ -1,5 +1,6 @@
 [workspace]
 members = [ "async-openai", "async-openai-*", "examples/*" ]
+exclude = [ "examples/responses-stream" ]
 # Only check / build main crates by default (check all with `--workspace`)
 default-members = ["async-openai", "async-openai-*"]
 resolver = "2"

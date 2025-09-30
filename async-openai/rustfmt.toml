@@ -1,0 +1,3 @@
+# Rustfmt configuration for async-openai
+# Prevent merging of multiple #[derive(...)] attributes
+merge_derives = false
