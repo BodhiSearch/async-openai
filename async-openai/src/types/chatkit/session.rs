@@ -7,6 +7,7 @@ use crate::error::OpenAIError;
 
 /// Represents a ChatKit session and its resolved configuration.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionResource {
     /// Identifier for the ChatKit session.
     pub id: String,
@@ -37,6 +38,7 @@ fn default_session_object() -> String {
 
 /// Workflow metadata and state returned for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatkitWorkflow {
     /// Identifier of the workflow backing the session.
     pub id: String,
@@ -52,6 +54,7 @@ pub struct ChatkitWorkflow {
 
 /// Controls diagnostic tracing during the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatkitWorkflowTracing {
     /// Indicates whether tracing is enabled.
     pub enabled: bool,
@@ -59,6 +62,7 @@ pub struct ChatkitWorkflowTracing {
 
 /// Active per-minute request limit for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionRateLimits {
     /// Maximum allowed requests per one-minute window.
     pub max_requests_per_1_minute: u32,
@@ -66,6 +70,7 @@ pub struct ChatSessionRateLimits {
 
 /// Current lifecycle state of the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ChatSessionStatus {
     Active,
@@ -75,6 +80,7 @@ pub enum ChatSessionStatus {
 
 /// ChatKit configuration for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionChatkitConfiguration {
     /// Automatic thread titling preferences.
     pub automatic_thread_titling: ChatSessionAutomaticThreadTitling,
@@ -86,6 +92,7 @@ pub struct ChatSessionChatkitConfiguration {
 
 /// Automatic thread title preferences for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionAutomaticThreadTitling {
     /// Whether automatic thread titling is enabled.
     pub enabled: bool,
@@ -93,6 +100,7 @@ pub struct ChatSessionAutomaticThreadTitling {
 
 /// Upload permissions and limits applied to the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionFileUpload {
     /// Indicates if uploads are enabled for the session.
     pub enabled: bool,
@@ -106,6 +114,7 @@ pub struct ChatSessionFileUpload {
 
 /// History retention preferences returned for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ChatSessionHistory {
     /// Indicates if chat history is persisted for the session.
     pub enabled: bool,
@@ -116,6 +125,7 @@ pub struct ChatSessionHistory {
 
 /// Parameters for provisioning a new ChatKit session.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateChatSessionRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -139,6 +149,7 @@ pub struct CreateChatSessionBody {
 
 /// Workflow reference and overrides applied to the chat session.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "WorkflowParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -160,6 +171,7 @@ pub struct WorkflowParam {
 
 /// Controls diagnostic tracing during the session.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "WorkflowTracingParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -173,6 +185,7 @@ pub struct WorkflowTracingParam {
 
 /// Controls when the session expires relative to an anchor timestamp.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ExpiresAfterParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -193,6 +206,7 @@ fn default_anchor() -> String {
 
 /// Controls request rate limits for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "RateLimitsParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -206,6 +220,7 @@ pub struct RateLimitsParam {
 
 /// Optional per-session configuration settings for ChatKit behavior.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ChatkitConfigurationParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -225,6 +240,7 @@ pub struct ChatkitConfigurationParam {
 
 /// Controls whether ChatKit automatically generates thread titles.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "AutomaticThreadTitlingParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -238,6 +254,7 @@ pub struct AutomaticThreadTitlingParam {
 
 /// Controls whether users can upload files.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "FileUploadParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -257,6 +274,7 @@ pub struct FileUploadParam {
 
 /// Controls how much historical context is retained for the session.
 #[derive(Clone, Serialize, Debug, Deserialize, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "HistoryParamArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

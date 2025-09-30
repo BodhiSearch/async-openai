@@ -6,6 +6,7 @@ use crate::error::OpenAIError;
 use crate::types::InputSource;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum MemoryLimit {
     #[default]
     #[serde(rename = "1g")]
@@ -19,6 +20,7 @@ pub enum MemoryLimit {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerResource {
     /// Unique identifier for the container.
     pub id: String,
@@ -43,6 +45,7 @@ pub struct ContainerResource {
 
 /// Expiration policy for containers.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerExpiresAfter {
     /// Time anchor for the expiration time. Currently only 'last_active_at' is supported.
     pub anchor: ContainerExpiresAfterAnchor,
@@ -51,6 +54,7 @@ pub struct ContainerExpiresAfter {
 
 /// Anchor for container expiration.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ContainerExpiresAfterAnchor {
     LastActiveAt,
@@ -59,6 +63,7 @@ pub enum ContainerExpiresAfterAnchor {
 /// Request to create a container.
 /// openapi spec type: CreateContainerBody
 #[derive(Debug, Default, Clone, Builder, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateContainerRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -80,6 +85,7 @@ pub struct CreateContainerRequest {
 
 /// Response when listing containers.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerListResource {
     /// The type of object returned, must be 'list'.
     pub object: String,
@@ -95,6 +101,7 @@ pub struct ContainerListResource {
 
 /// Response when deleting a container.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteContainerResponse {
     pub id: String,
     pub object: String,
@@ -105,6 +112,7 @@ pub struct DeleteContainerResponse {
 
 /// The container file object represents a file in a container.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerFileResource {
     /// Unique identifier for the file.
     pub id: String,
@@ -134,6 +142,7 @@ pub struct CreateContainerFileRequest {
 
 /// Response when listing container files.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerFileListResource {
     /// The type of object returned, must be 'list'.
     pub object: String,
@@ -149,6 +158,7 @@ pub struct ContainerFileListResource {
 
 /// Response when deleting a container file.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteContainerFileResponse {
     pub id: String,
     pub object: String,

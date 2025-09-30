@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing ChatKit threads.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListChatKitThreadsOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListChatKitThreadsOrder {
 
 /// Query parameters for listing ChatKit threads.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListChatKitThreadsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -39,6 +41,7 @@ pub struct ListChatKitThreadsQuery {
 
 /// Sort order for listing ChatKit thread items.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListChatKitThreadItemsOrder {
     /// Ascending order
@@ -49,6 +52,7 @@ pub enum ListChatKitThreadItemsOrder {
 
 /// Query parameters for listing ChatKit thread items.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListChatKitThreadItemsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

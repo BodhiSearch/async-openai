@@ -19,6 +19,7 @@ pub use crate::types::responses::{EasyInputMessage, InputTextContent, ReasoningE
 /// - See how well my chatbot handles customer support
 /// - Check if o4-mini is better at my usecase than gpt-4o
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Eval {
     /// The object type, which is always "eval".
     pub object: String,
@@ -37,6 +38,7 @@ pub struct Eval {
 
 /// Configuration of data sources used in runs of the evaluation.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalDataSourceConfig {
     /// Custom data source config.
@@ -50,6 +52,7 @@ pub enum EvalDataSourceConfig {
 
 /// Custom data source config.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalCustomDataSourceConfig {
     /// The type of data source. Always "custom".
     #[serde(rename = "type")]
@@ -60,6 +63,7 @@ pub struct EvalCustomDataSourceConfig {
 
 /// Logs data source config.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalLogsDataSourceConfig {
     /// The type of data source. Always "logs".
     #[serde(rename = "type")]
@@ -73,6 +77,7 @@ pub struct EvalLogsDataSourceConfig {
 
 /// Stored completions data source config (deprecated).
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalStoredCompletionsDataSourceConfig {
     /// The type of data source. Always "stored_completions".
     #[serde(rename = "type")]
@@ -86,6 +91,7 @@ pub struct EvalStoredCompletionsDataSourceConfig {
 
 /// A list of testing criteria.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalTestingCriterion {
     /// Label model grader.
@@ -102,16 +108,19 @@ pub enum EvalTestingCriterion {
 
 /// Label model grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(transparent)]
 pub struct EvalGraderLabelModel(pub GraderLabelModel);
 
 /// String check grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(transparent)]
 pub struct EvalGraderStringCheck(pub GraderStringCheck);
 
 /// Text similarity grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalGraderTextSimilarity {
     #[serde(flatten)]
     pub grader: GraderTextSimilarity,
@@ -120,6 +129,7 @@ pub struct EvalGraderTextSimilarity {
 
 /// Text similarity metric.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TextSimilarityMetric {
     /// Cosine similarity.
@@ -149,6 +159,7 @@ pub enum TextSimilarityMetric {
 /// Python grader.
 /// also in openapi spec: GraderPython
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalGraderPython {
     #[serde(flatten)]
     pub grader: GraderPython,
@@ -156,6 +167,7 @@ pub struct EvalGraderPython {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SamplingParams {
     /// A seed value to initialize the randomness, during sampling.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -177,6 +189,7 @@ pub struct SamplingParams {
 /// Score model grader.
 /// also in openapi spec: GraderScoreModel
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalGraderScoreModel {
     #[serde(flatten)]
     pub grader: GraderScoreModel,
@@ -185,6 +198,7 @@ pub struct EvalGraderScoreModel {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalItem {
     /// The role of the message input. One of `user`, `assistant`, `system`, or
     /// `developer`.
@@ -196,6 +210,7 @@ pub struct EvalItem {
 
 /// The role of the message input.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum EvalItemRole {
     /// User role.
@@ -210,6 +225,7 @@ pub enum EvalItemRole {
 
 /// Output text from the model.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalItemContentOutputText {
     /// The text output from the model.
     pub text: String,
@@ -217,6 +233,7 @@ pub struct EvalItemContentOutputText {
 
 /// Input image block used within EvalItem content arrays.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalItemInputImage {
     /// The URL of the image input.
     pub image_url: String,
@@ -229,6 +246,7 @@ pub struct EvalItemInputImage {
 /// Inputs to the model - can contain template strings.
 /// Supports text, output text, input images, and input audio, either as a single item or an array of items.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum EvalItemContent {
     /// An array of Input text, Output text, Input image, and Input audio
@@ -239,6 +257,7 @@ pub enum EvalItemContent {
 
 /// A single content item: input text, output text, input image, or input audio.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalItemContentItem {
     /// An input text content object with type field.
@@ -256,6 +275,7 @@ pub enum EvalItemContentItem {
 
 /// List of evals.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalList {
     /// The object type, which is always "list".
     pub object: String,
@@ -270,6 +290,7 @@ pub struct EvalList {
 }
 
 #[derive(Debug, Serialize, Clone, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateEvalRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -290,6 +311,7 @@ pub struct CreateEvalRequest {
 }
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CreateEvalDataSourceConfig {
     /// A CustomDataSourceConfig object that defines the schema for the data source used for the evaluation
@@ -309,6 +331,7 @@ impl Default for CreateEvalDataSourceConfig {
 }
 
 #[derive(Debug, Serialize, Clone, PartialEq, Builder, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateEvalCustomDataSourceConfigArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -325,6 +348,7 @@ pub struct CreateEvalCustomDataSourceConfig {
 
 /// Logs data source config for creating an eval.
 #[derive(Debug, Serialize, Clone, PartialEq, Builder, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateEvalLogsDataSourceConfigArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -337,6 +361,7 @@ pub struct CreateEvalLogsDataSourceConfig {
 }
 
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CreateEvalTestingCriterion {
     /// A LabelModelGrader object which uses a model to assign labels to each item
@@ -355,6 +380,7 @@ pub enum CreateEvalTestingCriterion {
 
 /// Label model grader for creating an eval.
 #[derive(Debug, Serialize, Clone, PartialEq, Builder, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateEvalLabelModelGraderArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -375,6 +401,7 @@ pub struct CreateEvalLabelModelGrader {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SimpleInputMessage {
     /// The role of the message.
     pub role: String,
@@ -384,6 +411,7 @@ pub struct SimpleInputMessage {
 
 /// A chat message that makes up the prompt or context.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CreateEvalItem {
     /// A message input to the model with a role indicating instruction following
@@ -400,6 +428,7 @@ pub enum CreateEvalItem {
 
 /// Request to update an eval.
 #[derive(Debug, Serialize, Clone, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UpdateEvalRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -416,6 +445,7 @@ pub struct UpdateEvalRequest {
 
 /// Response from deleting an eval.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteEvalResponse {
     /// The object type, which is always "eval.deleted".
     pub object: String,
@@ -462,6 +492,7 @@ pub struct EvalRun {
 
 /// Status of an evaluation run.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum EvalRunStatus {
     /// Queued.
@@ -478,6 +509,7 @@ pub enum EvalRunStatus {
 
 /// Counters summarizing the outcomes of the evaluation run.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunResultCounts {
     /// Total number of executed output items.
     pub total: u32,
@@ -491,6 +523,7 @@ pub struct EvalRunResultCounts {
 
 /// Usage statistics for each model during the evaluation run.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunModelUsage {
     /// The name of the model.
     pub model_name: String,
@@ -508,6 +541,7 @@ pub struct EvalRunModelUsage {
 
 /// Results per testing criteria applied during the evaluation run.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunTestingCriteriaResult {
     /// A description of the testing criteria.
     pub testing_criteria: String,
@@ -519,6 +553,7 @@ pub struct EvalRunTestingCriteriaResult {
 
 /// Information about the run's data source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalRunDataSource {
     /// A JsonlRunDataSource object with that specifies a JSONL file that matches the eval
@@ -531,6 +566,7 @@ pub enum EvalRunDataSource {
 
 /// JSONL run data source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateEvalJsonlRunDataSource {
     /// Determines what populates the `item` namespace in the data source.
     pub source: EvalJsonlSource,
@@ -538,6 +574,7 @@ pub struct CreateEvalJsonlRunDataSource {
 
 /// JSONL source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalJsonlSource {
     /// File content source.
@@ -548,6 +585,7 @@ pub enum EvalJsonlSource {
 
 /// JSONL file content source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalJsonlFileContentSource {
     /// The content of the jsonl file.
     pub content: Vec<EvalJsonlContentItem>,
@@ -555,6 +593,7 @@ pub struct EvalJsonlFileContentSource {
 
 /// JSONL file ID source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalJsonlFileIdSource {
     /// The identifier of the file.
     pub id: String,
@@ -562,6 +601,7 @@ pub struct EvalJsonlFileIdSource {
 
 /// JSONL content item.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalJsonlContentItem {
     /// The item data.
     pub item: serde_json::Value,
@@ -572,6 +612,7 @@ pub struct EvalJsonlContentItem {
 
 /// Completions run data source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateEvalCompletionsRunDataSource {
     /// Used when sampling from a model. Dictates the structure of the messages passed into the model. Can
     /// either be a reference to a prebuilt trajectory (ie, `item.input_trajectory`), or a template with
@@ -587,6 +628,7 @@ pub struct CreateEvalCompletionsRunDataSource {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TemplateInputMessages {
     /// A list of chat messages forming the prompt or context. May include variable references to
     /// the `item` namespace, ie {{item.name}}.
@@ -594,6 +636,7 @@ pub struct TemplateInputMessages {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ItemReference {
     /// A reference to a variable in the `item` namespace. Ie, "item.input_trajectory"
     pub item_reference: String,
@@ -601,6 +644,7 @@ pub struct ItemReference {
 
 /// Input messages for completions.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalInputMessages {
     /// Template input messages.
@@ -611,6 +655,7 @@ pub enum EvalInputMessages {
 
 /// Sampling parameters for the model.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalSamplingParams {
     /// A seed value to initialize the randomness, during sampling.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -636,6 +681,7 @@ pub struct EvalSamplingParams {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalResponsesSamplingParams {
     /// A seed value to initialize the randomness, during sampling.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -668,6 +714,7 @@ pub struct EvalResponsesSamplingParams {
 
 /// Completions source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalCompletionsSource {
     /// File content source.
@@ -680,6 +727,7 @@ pub enum EvalCompletionsSource {
 
 /// Stored completions source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalStoredCompletionsSource {
     /// Metadata filters for the stored completions.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -700,6 +748,7 @@ pub struct EvalStoredCompletionsSource {
 
 /// Responses run data source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateEvalResponsesRunDataSource {
     /// Used when sampling from a model. Dictates the structure of the messages passed into the model.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -715,6 +764,7 @@ pub struct CreateEvalResponsesRunDataSource {
 
 /// Responses source.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum EvalResponsesRunSource {
     /// File content source.
@@ -727,6 +777,7 @@ pub enum EvalResponsesRunSource {
 
 /// A EvalResponsesSource object describing a run data source configuration.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalResponsesSource {
     /// Metadata filter for the responses. This is a query parameter used to select responses.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -762,6 +813,7 @@ pub struct EvalResponsesSource {
 
 /// List of eval runs.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunList {
     /// The object type, which is always "list".
     pub object: String,
@@ -777,6 +829,7 @@ pub struct EvalRunList {
 
 /// Request to create an eval run.
 #[derive(Debug, Serialize, Clone, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateEvalRunRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -795,6 +848,7 @@ pub struct CreateEvalRunRequest {
 
 /// Details about the run's data source.
 #[derive(Debug, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CreateEvalRunDataSource {
     /// JSONL data source.
@@ -814,6 +868,7 @@ impl Default for CreateEvalRunDataSource {
 
 /// Response from deleting an eval run.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteEvalRunResponse {
     /// The object type, which is always "eval.run.deleted".
     pub object: String,
@@ -827,6 +882,7 @@ pub struct DeleteEvalRunResponse {
 
 /// A schema representing an evaluation run output item.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunOutputItem {
     /// The object type, which is always "eval.run.output_item".
     pub object: String,
@@ -852,6 +908,7 @@ pub struct EvalRunOutputItem {
 
 /// A single grader result for an evaluation run output item.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunOutputItemResult {
     /// The name of the grader.
     pub name: String,
@@ -865,6 +922,7 @@ pub struct EvalRunOutputItemResult {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SimpleOutputMessage {
     pub role: String,
     pub content: String,
@@ -897,6 +955,7 @@ pub struct EvalRunOutputItemSample {
 
 /// Token usage details for the sample.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunOutputItemUsage {
     /// The total number of tokens used.
     pub total_tokens: i32,
@@ -910,6 +969,7 @@ pub struct EvalRunOutputItemUsage {
 
 /// List of eval run output items.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalRunOutputItemList {
     /// The object type, which is always "list".
     pub object: String,
@@ -925,6 +985,7 @@ pub struct EvalRunOutputItemList {
 
 /// An object representing an error response from the Eval API.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct EvalApiError {
     /// The error code.
     pub code: String,

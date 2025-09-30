@@ -11,6 +11,7 @@ use crate::types::{
 };
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeResponseUsage {
     /// Details about the input tokens used in the Response. Cached tokens are tokens from previous
     /// turns in the conversation that are included as context for the current response. Cached tokens
@@ -33,6 +34,7 @@ pub struct RealtimeResponseUsage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct InputTokenDetails {
     /// The number of audio tokens used as input for the Response.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -54,6 +56,7 @@ pub struct InputTokenDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct CachedTokenDetails {
     /// The number of cached audio tokens used as input for the Response.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -69,6 +72,7 @@ pub struct CachedTokenDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct OutputTokenDetails {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub text_tokens: Option<u32>,
@@ -77,6 +81,7 @@ pub struct OutputTokenDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RealtimeResponseStatus {
     InProgress,
@@ -87,12 +92,14 @@ pub enum RealtimeResponseStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct Error {
     pub code: String,
     pub r#type: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeResponseStatusDetailType {
     Completed,
@@ -102,6 +109,7 @@ pub enum RealtimeResponseStatusDetailType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RealtimeResponseStatusDetailReason {
     TurnDetected,
@@ -111,6 +119,7 @@ pub enum RealtimeResponseStatusDetailReason {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeResponseStatusDetail {
     /// A description of the error that caused the response to fail, populated when the status is failed.
     pub error: Option<Error>,
@@ -125,6 +134,7 @@ pub struct RealtimeResponseStatusDetail {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseAudioOutput {
     /// The format of the output audio.
     pub format: RealtimeAudioFormats,
@@ -137,12 +147,14 @@ pub struct ResponseAudioOutput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseAudio {
     /// Configuration for audio output.
     pub output: ResponseAudioOutput,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Conversation {
     #[default]
@@ -152,6 +164,7 @@ pub enum Conversation {
 
 /// The response resource.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeResponseCreateParams {
     /// Configuration for audio input and output.
     pub audio: ResponseAudio,
@@ -214,6 +227,7 @@ pub struct RealtimeResponseCreateParams {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeResponse {
     /// Configuration for audio output.
     pub audio: Option<ResponseAudio>,

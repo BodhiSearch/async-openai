@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing videos.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListVideosOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListVideosOrder {
 
 /// Query parameters for listing videos.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListVideosQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

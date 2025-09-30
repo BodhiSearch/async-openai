@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing chat completions.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListChatCompletionsOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListChatCompletionsOrder {
 
 /// Query parameters for listing chat completions.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListChatCompletionsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -39,6 +41,7 @@ pub struct ListChatCompletionsQuery {
 
 /// Sort order for listing chat completion messages.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum GetChatCompletionMessagesOrder {
     /// Ascending order
@@ -49,6 +52,7 @@ pub enum GetChatCompletionMessagesOrder {
 
 /// Query parameters for getting chat completion messages.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetChatCompletionMessagesQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

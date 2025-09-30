@@ -13,6 +13,7 @@ use crate::types::assistants::{
 
 /// Represents a thread that contains [messages](https://platform.openai.com/docs/api-reference/messages).
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ThreadObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -28,6 +29,7 @@ pub struct ThreadObject {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateThreadRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -47,6 +49,7 @@ pub struct CreateThreadRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ModifyThreadRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<HashMap<String, serde_json::Value>>,
@@ -57,6 +60,7 @@ pub struct ModifyThreadRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteThreadResponse {
     pub id: String,
     pub deleted: bool,
@@ -64,6 +68,7 @@ pub struct DeleteThreadResponse {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateThreadAndRunRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

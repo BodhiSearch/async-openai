@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing messages.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListMessagesOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListMessagesOrder {
 
 /// Query parameters for listing messages.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListMessagesQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -39,6 +41,7 @@ pub struct ListMessagesQuery {
 
 /// Sort order for listing runs.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListRunsOrder {
     /// Ascending order
@@ -49,6 +52,7 @@ pub enum ListRunsOrder {
 
 /// Query parameters for listing runs.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListRunsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -71,6 +75,7 @@ pub struct ListRunsQuery {
 
 /// Sort order for listing run steps.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListRunStepsOrder {
     /// Ascending order
@@ -81,6 +86,7 @@ pub enum ListRunStepsOrder {
 
 /// Query parameters for listing run steps.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListRunStepsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -106,6 +112,7 @@ pub struct ListRunStepsQuery {
 
 /// Query parameters for retrieving a run step.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetRunStepQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

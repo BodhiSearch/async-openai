@@ -12,6 +12,7 @@ use crate::types::assistants::{
 
 /// Represents an execution run on a [thread](https://platform.openai.com/docs/api-reference/threads).
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -86,6 +87,7 @@ pub struct RunObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TruncationObjectType {
     #[default]
@@ -95,6 +97,7 @@ pub enum TruncationObjectType {
 
 /// Thread Truncation Controls
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TruncationObject {
     /// The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will be truncated to the n most recent messages in the thread. When set to `auto`, messages in the middle of the thread will be dropped to fit the context length of the model, `max_prompt_tokens`.
     pub r#type: TruncationObjectType,
@@ -103,12 +106,14 @@ pub struct TruncationObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunObjectIncompleteDetails {
     /// The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run.
     pub reason: RunObjectIncompleteDetailsReason,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RunObjectIncompleteDetailsReason {
     MaxCompletionTokens,
@@ -116,6 +121,7 @@ pub enum RunObjectIncompleteDetailsReason {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RunStatus {
     Queued,
@@ -130,6 +136,7 @@ pub enum RunStatus {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RequiredAction {
     /// For now, this is always `submit_tool_outputs`.
     pub r#type: String,
@@ -138,11 +145,13 @@ pub struct RequiredAction {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SubmitToolOutputs {
     pub tool_calls: Vec<RunToolCallObject>,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunToolCallObject {
     /// The ID of the tool call. This ID must be referenced when you submit the tool outputs in using the [Submit tool outputs to run](https://platform.openai.com/docs/api-reference/runs/submitToolOutputs) endpoint.
     pub id: String,
@@ -153,6 +162,7 @@ pub struct RunToolCallObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LastError {
     /// One of `server_error`, `rate_limit_exceeded`, or `invalid_prompt`.
     pub code: LastErrorCode,
@@ -161,6 +171,7 @@ pub struct LastError {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum LastErrorCode {
     ServerError,
@@ -169,6 +180,7 @@ pub enum LastErrorCode {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunCompletionUsage {
     /// Number of completion tokens used over the course of the run.
     pub completion_tokens: u32,
@@ -179,6 +191,7 @@ pub struct RunCompletionUsage {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateRunRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -249,12 +262,14 @@ pub struct CreateRunRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ModifyRunRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<HashMap<String, serde_json::Value>>,
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListRunsResponse {
     pub object: String,
     pub data: Vec<RunObject>,
@@ -264,6 +279,7 @@ pub struct ListRunsResponse {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SubmitToolOutputsRunRequest {
     /// A list of tools for which the outputs are being submitted.
     pub tool_outputs: Vec<ToolsOutputs>,
@@ -272,6 +288,7 @@ pub struct SubmitToolOutputsRunRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ToolsOutputsArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

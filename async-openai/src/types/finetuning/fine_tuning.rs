@@ -12,6 +12,7 @@ use crate::{
 };
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum NEpochs {
     #[default]
     #[serde(rename = "auto")]
@@ -21,6 +22,7 @@ pub enum NEpochs {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum BatchSize {
     #[default]
     #[serde(rename = "auto")]
@@ -30,6 +32,7 @@ pub enum BatchSize {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum LearningRateMultiplier {
     #[default]
     #[serde(rename = "auto")]
@@ -39,6 +42,7 @@ pub enum LearningRateMultiplier {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneSupervisedHyperparameters {
     /// Number of examples in each batch. A larger batch size means that model parameters
     /// are updated less frequently, but with lower variance.
@@ -51,6 +55,7 @@ pub struct FineTuneSupervisedHyperparameters {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum Beta {
     #[default]
     #[serde(rename = "auto")]
@@ -60,6 +65,7 @@ pub enum Beta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneDPOHyperparameters {
     /// The beta value for the DPO method. A higher beta value will increase the weight of the penalty between the policy and reference model.
     pub beta: Beta,
@@ -74,6 +80,7 @@ pub struct FineTuneDPOHyperparameters {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateFineTuningJobRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -137,6 +144,7 @@ pub struct CreateFineTuningJobRequest {
 
 /// The method used for fine-tuning.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum FineTuneMethod {
     Supervised {
@@ -152,16 +160,19 @@ pub enum FineTuneMethod {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneSupervisedMethod {
     pub hyperparameters: FineTuneSupervisedHyperparameters,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneDPOMethod {
     pub hyperparameters: FineTuneDPOHyperparameters,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FineTuneReinforcementMethodGrader {
     StringCheck(GraderStringCheck),
@@ -172,6 +183,7 @@ pub enum FineTuneReinforcementMethodGrader {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum FineTuneReasoningEffort {
     #[default]
@@ -182,6 +194,7 @@ pub enum FineTuneReasoningEffort {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum ComputeMultiplier {
     #[default]
     #[serde(rename = "auto")]
@@ -191,6 +204,7 @@ pub enum ComputeMultiplier {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum EvalInterval {
     #[default]
     #[serde(rename = "auto")]
@@ -200,6 +214,7 @@ pub enum EvalInterval {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum EvalSamples {
     #[default]
     #[serde(rename = "auto")]
@@ -209,6 +224,7 @@ pub enum EvalSamples {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneReinforcementHyperparameters {
     /// Number of examples in each batch. A larger batch size means that model parameters
     /// are updated less frequently, but with lower variance.
@@ -229,12 +245,14 @@ pub struct FineTuneReinforcementHyperparameters {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneReinforcementMethod {
     pub grader: FineTuneReinforcementMethodGrader,
     pub hyperparameters: FineTuneReinforcementHyperparameters,
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum FineTuningJobIntegrationType {
     #[default]
@@ -242,6 +260,7 @@ pub enum FineTuningJobIntegrationType {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningIntegration {
     /// The type of integration to enable. Currently, only "wandb" (Weights and Biases) is supported.
     pub r#type: FineTuningJobIntegrationType,
@@ -253,6 +272,7 @@ pub struct FineTuningIntegration {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WandB {
     /// The name of the project that the new run will be created under.
     pub project: String,
@@ -271,6 +291,7 @@ pub struct WandB {
 
 /// For fine-tuning jobs that have `failed`, this will contain more information on the cause of the failure.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuneJobError {
     ///  A machine-readable error code.
     pub code: String,
@@ -282,6 +303,7 @@ pub struct FineTuneJobError {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum FineTuningJobStatus {
     ValidatingFiles,
@@ -293,6 +315,7 @@ pub enum FineTuningJobStatus {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Hyperparameters {
     pub batch_size: BatchSize,
     pub learning_rate_multiplier: LearningRateMultiplier,
@@ -301,6 +324,7 @@ pub struct Hyperparameters {
 
 /// The `fine_tuning.job` object represents a fine-tuning job that has been created through the API.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningJob {
     /// The object identifier, which can be referenced in the API endpoints.
     pub id: String,
@@ -359,6 +383,7 @@ pub struct FineTuningJob {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListPaginatedFineTuningJobsResponse {
     pub data: Vec<FineTuningJob>,
     pub has_more: bool,
@@ -366,12 +391,14 @@ pub struct ListPaginatedFineTuningJobsResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListFineTuningJobEventsResponse {
     pub data: Vec<FineTuningJobEvent>,
     pub object: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListFineTuningJobCheckpointsResponse {
     pub data: Vec<FineTuningJobCheckpoint>,
     pub object: String,
@@ -381,6 +408,7 @@ pub struct ListFineTuningJobCheckpointsResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Level {
     Info,
@@ -390,6 +418,7 @@ pub enum Level {
 
 ///Fine-tuning job event object
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningJobEvent {
     /// The object identifier.
     pub id: String,
@@ -408,6 +437,7 @@ pub struct FineTuningJobEvent {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum FineTuningJobEventType {
     Message,
@@ -416,6 +446,7 @@ pub enum FineTuningJobEventType {
 
 /// The `fine_tuning.job.checkpoint` object represents a model checkpoint for a fine-tuning job that is ready to use.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningJobCheckpoint {
     /// The checkpoint identifier, which can be referenced in the API endpoints.
     pub id: String,
@@ -434,6 +465,7 @@ pub struct FineTuningJobCheckpoint {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningJobCheckpointMetrics {
     pub step: u32,
     pub train_loss: f32,
@@ -445,12 +477,14 @@ pub struct FineTuningJobCheckpointMetrics {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateFineTuningCheckpointPermissionRequest {
     /// The project identifiers to grant access to.
     pub project_ids: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListFineTuningCheckpointPermissionResponse {
     pub data: Vec<FineTuningCheckpointPermission>,
     pub object: String,
@@ -461,6 +495,7 @@ pub struct ListFineTuningCheckpointPermissionResponse {
 
 /// The `checkpoint.permission` object represents a permission for a fine-tuned model checkpoint.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FineTuningCheckpointPermission {
     /// The permission identifier, which can be referenced in the API endpoints.
     pub id: String,
@@ -473,6 +508,7 @@ pub struct FineTuningCheckpointPermission {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteFineTuningCheckpointPermissionResponse {
     pub object: String,
     pub id: String,

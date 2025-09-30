@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Represents an individual Admin API key in an org.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AdminApiKey {
     /// The object type, which is always `organization.admin_api_key`.
     pub object: String,
@@ -26,6 +27,7 @@ pub struct AdminApiKey {
 
 /// Represents the owner of an admin API key.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AdminApiKeyOwner {
     pub r#type: String,
 
@@ -42,6 +44,7 @@ pub struct AdminApiKeyOwner {
 
 /// Represents the response object for listing admin API keys.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApiKeyList {
     /// The object type, which is always `list`.
     pub object: String,
@@ -57,6 +60,7 @@ pub struct ApiKeyList {
 
 /// Represents the request object for creating an admin API key.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateAdminApiKeyRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -69,6 +73,7 @@ pub struct CreateAdminApiKeyRequest {
 
 /// Represents the response object for deleting an admin API key.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AdminApiKeyDeleteResponse {
     /// The object type, which is always `organization.admin_api_key.deleted`.
     pub object: String,

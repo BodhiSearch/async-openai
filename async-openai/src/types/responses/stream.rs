@@ -4,6 +4,7 @@ use crate::types::responses::{OutputContent, OutputItem, Response, ResponseLogPr
 
 /// Event types for streaming responses from the Responses API
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ResponseStreamEvent {
     /// An event that is emitted when a response is created.
@@ -156,36 +157,42 @@ pub enum ResponseStreamEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCreatedEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseInProgressEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCompletedEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFailedEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseIncompleteEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseOutputItemAddedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -193,6 +200,7 @@ pub struct ResponseOutputItemAddedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseOutputItemDoneEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -200,6 +208,7 @@ pub struct ResponseOutputItemDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseContentPartAddedEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -209,6 +218,7 @@ pub struct ResponseContentPartAddedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseContentPartDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -218,6 +228,7 @@ pub struct ResponseContentPartDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseTextDeltaEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -229,6 +240,7 @@ pub struct ResponseTextDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseTextDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -239,6 +251,7 @@ pub struct ResponseTextDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseRefusalDeltaEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -248,6 +261,7 @@ pub struct ResponseRefusalDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseRefusalDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -257,6 +271,7 @@ pub struct ResponseRefusalDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFunctionCallArgumentsDeltaEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -265,6 +280,7 @@ pub struct ResponseFunctionCallArgumentsDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFunctionCallArgumentsDoneEvent {
     /// <https://github.com/64bit/async-openai/issues/472>
     pub name: Option<String>,
@@ -275,6 +291,7 @@ pub struct ResponseFunctionCallArgumentsDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFileSearchCallInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -282,6 +299,7 @@ pub struct ResponseFileSearchCallInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFileSearchCallSearchingEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -289,6 +307,7 @@ pub struct ResponseFileSearchCallSearchingEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFileSearchCallCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -296,6 +315,7 @@ pub struct ResponseFileSearchCallCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseWebSearchCallInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -303,6 +323,7 @@ pub struct ResponseWebSearchCallInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseWebSearchCallSearchingEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -310,6 +331,7 @@ pub struct ResponseWebSearchCallSearchingEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseWebSearchCallCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -317,6 +339,7 @@ pub struct ResponseWebSearchCallCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningSummaryPartAddedEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -326,6 +349,7 @@ pub struct ResponseReasoningSummaryPartAddedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningSummaryPartDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -335,6 +359,7 @@ pub struct ResponseReasoningSummaryPartDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningSummaryTextDeltaEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -344,6 +369,7 @@ pub struct ResponseReasoningSummaryTextDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningSummaryTextDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -353,6 +379,7 @@ pub struct ResponseReasoningSummaryTextDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningTextDeltaEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -362,6 +389,7 @@ pub struct ResponseReasoningTextDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseReasoningTextDoneEvent {
     pub sequence_number: u64,
     pub item_id: String,
@@ -371,6 +399,7 @@ pub struct ResponseReasoningTextDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseImageGenCallCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -378,6 +407,7 @@ pub struct ResponseImageGenCallCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseImageGenCallGeneratingEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -385,6 +415,7 @@ pub struct ResponseImageGenCallGeneratingEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseImageGenCallInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -392,6 +423,7 @@ pub struct ResponseImageGenCallInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseImageGenCallPartialImageEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -401,6 +433,7 @@ pub struct ResponseImageGenCallPartialImageEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPCallArgumentsDeltaEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -409,6 +442,7 @@ pub struct ResponseMCPCallArgumentsDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPCallArgumentsDoneEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -417,6 +451,7 @@ pub struct ResponseMCPCallArgumentsDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPCallCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -424,6 +459,7 @@ pub struct ResponseMCPCallCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPCallFailedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -431,6 +467,7 @@ pub struct ResponseMCPCallFailedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPCallInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -438,6 +475,7 @@ pub struct ResponseMCPCallInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPListToolsCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -445,6 +483,7 @@ pub struct ResponseMCPListToolsCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPListToolsFailedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -452,6 +491,7 @@ pub struct ResponseMCPListToolsFailedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseMCPListToolsInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -459,6 +499,7 @@ pub struct ResponseMCPListToolsInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCodeInterpreterCallInProgressEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -466,6 +507,7 @@ pub struct ResponseCodeInterpreterCallInProgressEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCodeInterpreterCallInterpretingEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -473,6 +515,7 @@ pub struct ResponseCodeInterpreterCallInterpretingEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCodeInterpreterCallCompletedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -480,6 +523,7 @@ pub struct ResponseCodeInterpreterCallCompletedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCodeInterpreterCallCodeDeltaEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -488,6 +532,7 @@ pub struct ResponseCodeInterpreterCallCodeDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCodeInterpreterCallCodeDoneEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -496,6 +541,7 @@ pub struct ResponseCodeInterpreterCallCodeDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseOutputTextAnnotationAddedEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -506,12 +552,14 @@ pub struct ResponseOutputTextAnnotationAddedEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseQueuedEvent {
     pub sequence_number: u64,
     pub response: Response,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCustomToolCallInputDeltaEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -520,6 +568,7 @@ pub struct ResponseCustomToolCallInputDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseCustomToolCallInputDoneEvent {
     pub sequence_number: u64,
     pub output_index: u32,
@@ -528,6 +577,7 @@ pub struct ResponseCustomToolCallInputDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseErrorEvent {
     pub sequence_number: u64,
     pub code: Option<String>,

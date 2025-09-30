@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// The event type.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum AuditLogEventType {
     #[serde(rename = "api_key.created")]
     ApiKeyCreated,
@@ -109,6 +110,7 @@ pub enum AuditLogEventType {
 
 /// Represents a list of audit logs.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListAuditLogsResponse {
     /// The object type, which is always `list`.
     pub object: String,
@@ -124,6 +126,7 @@ pub struct ListAuditLogsResponse {
 
 /// The project that the action was scoped to. Absent for actions not scoped to projects.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProject {
     /// The project ID.
     pub id: String,
@@ -133,6 +136,7 @@ pub struct AuditLogProject {
 
 /// The actor who performed the audit logged action.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogActor {
     /// The type of actor. Is either `session` or `api_key`.
     pub r#type: String,
@@ -144,6 +148,7 @@ pub struct AuditLogActor {
 
 /// The session in which the audit logged action was performed.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogActorSession {
     /// The user who performed the audit logged action.
     pub user: AuditLogActorUser,
@@ -153,6 +158,7 @@ pub struct AuditLogActorSession {
 
 /// The API Key used to perform the audit logged action.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogActorApiKey {
     /// The tracking id of the API key.
     pub id: String,
@@ -165,6 +171,7 @@ pub struct AuditLogActorApiKey {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum AuditLogActorApiKeyType {
     User,
@@ -173,6 +180,7 @@ pub enum AuditLogActorApiKeyType {
 
 /// The user who performed the audit logged action.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogActorUser {
     /// The user id.
     pub id: String,
@@ -182,6 +190,7 @@ pub struct AuditLogActorUser {
 
 /// The service account that performed the audit logged action.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogActorServiceAccount {
     /// The service account id.
     pub id: String,
@@ -189,6 +198,7 @@ pub struct AuditLogActorServiceAccount {
 
 /// A log of a user action or configuration change within this organization.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLog {
     /// The ID of this log.
     pub id: String,
@@ -258,6 +268,7 @@ pub struct AuditLog {
 
 /// The details for events with the type `api_key.created`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogApiKeyCreated {
     /// The tracking ID of the API key.
     pub id: String,
@@ -267,6 +278,7 @@ pub struct AuditLogApiKeyCreated {
 
 /// The payload used to create the API key.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogApiKeyCreatedData {
     /// A list of scopes allowed for the API key, e.g. `["api.model.request"]`.
     pub scopes: Option<Vec<String>>,
@@ -274,6 +286,7 @@ pub struct AuditLogApiKeyCreatedData {
 
 /// The details for events with the type `api_key.updated`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogApiKeyUpdated {
     /// The tracking ID of the API key.
     pub id: String,
@@ -283,6 +296,7 @@ pub struct AuditLogApiKeyUpdated {
 
 /// The payload used to update the API key.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogApiKeyUpdatedChangesRequested {
     /// A list of scopes allowed for the API key, e.g. `["api.model.request"]`.
     pub scopes: Option<Vec<String>>,
@@ -290,6 +304,7 @@ pub struct AuditLogApiKeyUpdatedChangesRequested {
 
 /// The details for events with the type `api_key.deleted`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogApiKeyDeleted {
     /// The tracking ID of the API key.
     pub id: String,
@@ -297,6 +312,7 @@ pub struct AuditLogApiKeyDeleted {
 
 /// The details for events with the type `invite.sent`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogInviteSent {
     /// The ID of the invite.
     pub id: String,
@@ -306,6 +322,7 @@ pub struct AuditLogInviteSent {
 
 /// The payload used to create the invite.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogInviteSentData {
     /// The email invited to the organization.
     pub email: String,
@@ -315,6 +332,7 @@ pub struct AuditLogInviteSentData {
 
 /// The details for events with the type `invite.accepted`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogInviteAccepted {
     /// The ID of the invite.
     pub id: String,
@@ -322,6 +340,7 @@ pub struct AuditLogInviteAccepted {
 
 /// The details for events with the type `invite.deleted`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogInviteDeleted {
     /// The ID of the invite.
     pub id: String,
@@ -329,6 +348,7 @@ pub struct AuditLogInviteDeleted {
 
 /// The details for events with the type `login.failed`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogLoginFailed {
     /// The error code of the failure.
     pub error_code: String,
@@ -338,6 +358,7 @@ pub struct AuditLogLoginFailed {
 
 /// The details for events with the type `logout.failed`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogLogoutFailed {
     /// The error code of the failure.
     pub error_code: String,
@@ -347,6 +368,7 @@ pub struct AuditLogLogoutFailed {
 
 /// The details for events with the type `organization.updated`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogOrganizationUpdated {
     /// The organization ID.
     pub id: String,
@@ -356,6 +378,7 @@ pub struct AuditLogOrganizationUpdated {
 
 /// The payload used to update the organization settings.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogOrganizationUpdatedChangesRequested {
     /// The organization title.
     pub title: Option<String>,
@@ -369,6 +392,7 @@ pub struct AuditLogOrganizationUpdatedChangesRequested {
 
 /// The organization settings.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogOrganizationUpdatedChangesRequestedSettings {
     /// Visibility of the threads page which shows messages created with the Assistants API and Playground. One of `ANY_ROLE`, `OWNERS`, or `NONE`.
     pub threads_ui_visibility: Option<String>,
@@ -378,6 +402,7 @@ pub struct AuditLogOrganizationUpdatedChangesRequestedSettings {
 
 /// The details for events with the type `project.created`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProjectCreated {
     /// The project ID.
     pub id: String,
@@ -387,6 +412,7 @@ pub struct AuditLogProjectCreated {
 
 /// The payload used to create the project.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProjectCreatedData {
     /// The project name.
     pub name: String,
@@ -396,6 +422,7 @@ pub struct AuditLogProjectCreatedData {
 
 /// The details for events with the type `project.updated`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProjectUpdated {
     /// The project ID.
     pub id: String,
@@ -405,6 +432,7 @@ pub struct AuditLogProjectUpdated {
 
 /// The payload used to update the project.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProjectUpdatedChangesRequested {
     /// The title of the project as seen on the dashboard.
     pub title: Option<String>,
@@ -412,6 +440,7 @@ pub struct AuditLogProjectUpdatedChangesRequested {
 
 /// The details for events with the type `project.archived`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogProjectArchived {
     /// The project ID.
     pub id: String,
@@ -419,6 +448,7 @@ pub struct AuditLogProjectArchived {
 
 /// The details for events with the type `service_account.created`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogServiceAccountCreated {
     /// The service account ID.
     pub id: String,
@@ -428,6 +458,7 @@ pub struct AuditLogServiceAccountCreated {
 
 /// The payload used to create the service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogServiceAccountCreatedData {
     /// The role of the service account. Is either `owner` or `member`.
     pub role: String,
@@ -435,6 +466,7 @@ pub struct AuditLogServiceAccountCreatedData {
 
 /// The details for events with the type `service_account.updated`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogServiceAccountUpdated {
     /// The service account ID.
     pub id: String,
@@ -444,6 +476,7 @@ pub struct AuditLogServiceAccountUpdated {
 
 /// The payload used to updated the service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogServiceAccountUpdatedChangesRequested {
     /// The role of the service account. Is either `owner` or `member`.
     pub role: String,
@@ -451,6 +484,7 @@ pub struct AuditLogServiceAccountUpdatedChangesRequested {
 
 /// The details for events with the type `service_account.deleted`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogServiceAccountDeleted {
     /// The service account ID.
     pub id: String,
@@ -458,6 +492,7 @@ pub struct AuditLogServiceAccountDeleted {
 
 /// The details for events with the type `user.added`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogUserAdded {
     /// The user ID.
     pub id: String,
@@ -467,6 +502,7 @@ pub struct AuditLogUserAdded {
 
 /// The payload used to add the user to the project.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogUserAddedData {
     /// The role of the user. Is either `owner` or `member`.
     pub role: String,
@@ -474,6 +510,7 @@ pub struct AuditLogUserAddedData {
 
 /// The details for events with the type `user.updated`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogUserUpdated {
     /// The project ID.
     pub id: String,
@@ -483,6 +520,7 @@ pub struct AuditLogUserUpdated {
 
 /// The payload used to update the user.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogUserUpdatedChangesRequested {
     /// The role of the user. Is either `owner` or `member`.
     pub role: String,
@@ -490,6 +528,7 @@ pub struct AuditLogUserUpdatedChangesRequested {
 
 /// The details for events with the type `user.deleted`.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct AuditLogUserDeleted {
     /// The user ID.
     pub id: String,

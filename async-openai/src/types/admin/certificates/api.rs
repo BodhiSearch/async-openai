@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing organization certificates.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListOrganizationCertificatesOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListOrganizationCertificatesOrder {
 
 /// Query parameters for listing organization certificates.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListOrganizationCertificatesQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -33,6 +35,7 @@ pub struct ListOrganizationCertificatesQuery {
 
 /// Sort order for listing project certificates.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListProjectCertificatesOrder {
     /// Ascending order
@@ -43,6 +46,7 @@ pub enum ListProjectCertificatesOrder {
 
 /// Query parameters for listing project certificates.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListProjectCertificatesQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -62,6 +66,7 @@ pub struct ListProjectCertificatesQuery {
 
 /// Query parameters for getting a certificate.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetCertificateQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

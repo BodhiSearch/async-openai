@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Represents a project rate limit config.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectRateLimit {
     /// The object type, which is always `project.rate_limit`
     pub object: String,
@@ -31,6 +32,7 @@ pub struct ProjectRateLimit {
 
 /// Represents the response object for listing project rate limits.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectRateLimitListResponse {
     /// The object type, which is always `list`.
     pub object: String,
@@ -46,6 +48,7 @@ pub struct ProjectRateLimitListResponse {
 
 /// The project rate limit update request payload.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ProjectRateLimitUpdateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

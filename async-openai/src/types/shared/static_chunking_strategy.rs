@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Static Chunking Strategy
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct StaticChunkingStrategy {
     /// The maximum number of tokens in each chunk. The default value is `800`. The minimum value is `100` and the maximum value is `4096`.
     pub max_chunk_size_tokens: u16,

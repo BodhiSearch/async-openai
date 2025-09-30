@@ -4,6 +4,7 @@ use serde::Serialize;
 
 /// Query parameters for listing audit logs.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListAuditLogsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

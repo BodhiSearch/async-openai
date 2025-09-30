@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InputTokenDetails {
     /// The number of tokens that were retrieved from the cache.
     /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
@@ -8,6 +9,7 @@ pub struct InputTokenDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct OutputTokenDetails {
     /// The number of reasoning tokens.
     pub reasoning_tokens: u32,
@@ -15,6 +17,7 @@ pub struct OutputTokenDetails {
 
 /// Usage statistics for a response.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseUsage {
     /// The number of input tokens.
     pub input_tokens: u32,

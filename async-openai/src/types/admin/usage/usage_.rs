@@ -2,6 +2,7 @@ use serde::Deserialize;
 
 /// Response structure for organization usage endpoints.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageResponse {
     /// The object type, which is always `page`.
     pub object: String,
@@ -15,6 +16,7 @@ pub struct UsageResponse {
 
 /// A time bucket containing usage results.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageTimeBucket {
     /// The object type, which is always `bucket`.
     pub object: String,
@@ -34,6 +36,7 @@ pub struct UsageTimeBucket {
 
 /// Discriminated union of all possible usage result types.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum UsageResult {
     AudioSpeeches(UsageAudioSpeechesResult),
@@ -49,6 +52,7 @@ pub enum UsageResult {
 
 /// The aggregated audio speeches usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageAudioSpeechesResult {
     /// The object type, which is always `organization.usage.audio_speeches.result`.
     pub object: String,
@@ -68,6 +72,7 @@ pub struct UsageAudioSpeechesResult {
 
 /// The aggregated audio transcriptions usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageAudioTranscriptionsResult {
     /// The object type, which is always `organization.usage.audio_transcriptions.result`.
     pub object: String,
@@ -87,6 +92,7 @@ pub struct UsageAudioTranscriptionsResult {
 
 /// The aggregated code interpreter sessions usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageCodeInterpreterSessionsResult {
     /// The object type, which is always `organization.usage.code_interpreter_sessions.result`.
     pub object: String,
@@ -100,6 +106,7 @@ pub struct UsageCodeInterpreterSessionsResult {
 
 /// The aggregated completions usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageCompletionsResult {
     /// The object type, which is always `organization.usage.completions.result`.
     pub object: String,
@@ -158,6 +165,7 @@ pub struct UsageCompletionsResult {
 
 /// The aggregated embeddings usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageEmbeddingsResult {
     /// The object type, which is always `organization.usage.embeddings.result`.
     pub object: String,
@@ -177,6 +185,7 @@ pub struct UsageEmbeddingsResult {
 
 /// The aggregated images usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageImagesResult {
     /// The object type, which is always `organization.usage.images.result`.
     pub object: String,
@@ -200,6 +209,7 @@ pub struct UsageImagesResult {
 
 /// The aggregated moderations usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageModerationsResult {
     /// The object type, which is always `organization.usage.moderations.result`.
     pub object: String,
@@ -219,6 +229,7 @@ pub struct UsageModerationsResult {
 
 /// The aggregated vector stores usage details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct UsageVectorStoresResult {
     /// The object type, which is always `organization.usage.vector_stores.result`.
     pub object: String,
@@ -230,6 +241,7 @@ pub struct UsageVectorStoresResult {
 
 /// The aggregated costs details of the specific time bucket.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CostsResult {
     /// The object type, which is always `organization.costs.result`.
     pub object: String,
@@ -246,6 +258,7 @@ pub struct CostsResult {
 
 /// The monetary value in its associated currency.
 #[derive(Debug, Clone, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CostsAmount {
     /// The numeric value of the cost.
     pub value: f64,

@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Represents a ChatKit thread and its current status.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ThreadResource {
     /// Identifier of the thread.
     pub id: String,
@@ -28,6 +29,7 @@ fn default_thread_object() -> String {
 
 /// Current status for the thread.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ThreadStatus {
     /// Indicates that a thread is active.
@@ -40,6 +42,7 @@ pub enum ThreadStatus {
 
 /// A paginated list of ChatKit threads.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ThreadListResource {
     /// The type of object returned, must be `list`.
     #[serde(default = "default_list_object")]
@@ -60,6 +63,7 @@ fn default_list_object() -> String {
 
 /// Confirmation payload returned after deleting a thread.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct DeletedThreadResource {
     /// Identifier of the deleted thread.
     pub id: String,
@@ -76,6 +80,7 @@ fn default_deleted_object() -> String {
 
 /// A paginated list of thread items rendered for the ChatKit API.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ThreadItemListResource {
     /// The type of object returned, must be `list`.
     #[serde(default = "default_list_object")]
@@ -92,6 +97,7 @@ pub struct ThreadItemListResource {
 
 /// The thread item - discriminated union based on type field.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ThreadItem {
     /// User-authored messages within a thread.
@@ -116,6 +122,7 @@ pub enum ThreadItem {
 
 /// User-authored messages within a thread.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct UserMessageItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -142,6 +149,7 @@ fn default_thread_item_object() -> String {
 
 /// Content blocks that comprise a user message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum UserMessageContent {
     /// Text block that a user contributed to the thread.
@@ -154,6 +162,7 @@ pub enum UserMessageContent {
 
 /// Attachment metadata included on thread items.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Attachment {
     /// Attachment discriminator.
     #[serde(rename = "type")]
@@ -170,6 +179,7 @@ pub struct Attachment {
 
 /// Attachment discriminator.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum AttachmentType {
     Image,
@@ -178,6 +188,7 @@ pub enum AttachmentType {
 
 /// Model and tool overrides applied when generating the assistant response.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct InferenceOptions {
     /// Preferred tool to invoke. Defaults to null when ChatKit should auto-select.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -189,6 +200,7 @@ pub struct InferenceOptions {
 
 /// Tool selection that the assistant should honor when executing the item.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolChoice {
     /// Identifier of the requested tool.
     pub id: String,
@@ -196,6 +208,7 @@ pub struct ToolChoice {
 
 /// Assistant-authored message within a thread.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantMessageItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -212,6 +225,7 @@ pub struct AssistantMessageItem {
 
 /// Assistant response text accompanied by optional annotations.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseOutputText {
     /// Type discriminator that is always `output_text`.
     #[serde(default = "default_output_text_type")]
@@ -229,6 +243,7 @@ fn default_output_text_type() -> String {
 
 /// Annotation object describing a cited source.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Annotation {
     /// Annotation that references an uploaded file.
@@ -241,6 +256,7 @@ pub enum Annotation {
 
 /// Annotation that references an uploaded file.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileAnnotation {
     /// Type discriminator that is always `file` for this annotation.
     #[serde(default = "default_file_annotation_type")]
@@ -255,6 +271,7 @@ fn default_file_annotation_type() -> String {
 
 /// Attachment source referenced by an annotation.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileAnnotationSource {
     /// Type discriminator that is always `file`.
     #[serde(default = "default_file_source_type")]
@@ -269,6 +286,7 @@ fn default_file_source_type() -> String {
 
 /// Annotation that references a URL.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UrlAnnotation {
     /// Type discriminator that is always `url` for this annotation.
     #[serde(default = "default_url_annotation_type")]
@@ -283,6 +301,7 @@ fn default_url_annotation_type() -> String {
 
 /// URL backing an annotation entry.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UrlAnnotationSource {
     /// Type discriminator that is always `url`.
     #[serde(default = "default_url_source_type")]
@@ -297,6 +316,7 @@ fn default_url_source_type() -> String {
 
 /// Thread item that renders a widget payload.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WidgetMessageItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -313,6 +333,7 @@ pub struct WidgetMessageItem {
 
 /// Record of a client side tool invocation initiated by the assistant.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ClientToolCallItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -337,6 +358,7 @@ pub struct ClientToolCallItem {
 
 /// Execution status for the tool call.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ClientToolCallStatus {
     InProgress,
@@ -345,6 +367,7 @@ pub enum ClientToolCallStatus {
 
 /// Task emitted by the workflow to show progress and status updates.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TaskItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -365,6 +388,7 @@ pub struct TaskItem {
 
 /// Subtype for the task.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TaskType {
     Custom,
@@ -373,6 +397,7 @@ pub enum TaskType {
 
 /// Collection of workflow tasks grouped together in the thread.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TaskGroupItem {
     /// Identifier of the thread item.
     pub id: String,
@@ -389,6 +414,7 @@ pub struct TaskGroupItem {
 
 /// Task entry that appears within a TaskGroup.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TaskGroupTask {
     /// Subtype for the grouped task.
     pub task_type: TaskType,

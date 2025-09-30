@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing fine-tuning checkpoint permissions.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListFineTuningCheckpointPermissionsOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListFineTuningCheckpointPermissionsOrder {
 
 /// Query parameters for listing fine-tuning checkpoint permissions.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListFineTuningCheckpointPermissionsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -36,6 +38,7 @@ pub struct ListFineTuningCheckpointPermissionsQuery {
 
 /// Query parameters for listing fine-tuning jobs.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListPaginatedFineTuningJobsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -55,6 +58,7 @@ pub struct ListPaginatedFineTuningJobsQuery {
 
 /// Sort order for listing fine-tuning job checkpoints.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListFineTuningJobCheckpointsOrder {
     /// Ascending order
@@ -65,6 +69,7 @@ pub enum ListFineTuningJobCheckpointsOrder {
 
 /// Query parameters for listing fine-tuning job checkpoints.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListFineTuningJobCheckpointsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -81,6 +86,7 @@ pub struct ListFineTuningJobCheckpointsQuery {
 
 /// Sort order for listing fine-tuning events.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListFineTuningEventsOrder {
     /// Ascending order
@@ -91,6 +97,7 @@ pub enum ListFineTuningEventsOrder {
 
 /// Query parameters for listing fine-tuning events.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListFineTuningEventsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

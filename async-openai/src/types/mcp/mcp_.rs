@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::OpenAIError;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum McpToolConnectorId {
     ConnectorDropbox,
@@ -17,6 +18,7 @@ pub enum McpToolConnectorId {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Builder, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "MCPToolArgs",
     pattern = "mutable",
@@ -71,6 +73,7 @@ pub struct MCPTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum MCPToolAllowedTools {
     /// A string array of allowed tool names
@@ -80,6 +83,7 @@ pub enum MCPToolAllowedTools {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPToolFilter {
     /// Indicates whether or not a tool modifies data or is read-only.
     /// If an MCP server is annotated with [readOnlyHint](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
@@ -93,6 +97,7 @@ pub struct MCPToolFilter {
 
 /// Approval policy or filter for MCP tools.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum MCPToolRequireApproval {
     /// Specify which of the MCP server's tools require approval. Can be
@@ -106,6 +111,7 @@ pub enum MCPToolRequireApproval {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum MCPToolApprovalSetting {
     Always,
@@ -113,6 +119,7 @@ pub enum MCPToolApprovalSetting {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPToolApprovalFilter {
     /// A list of tools that always require approval.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -123,6 +130,7 @@ pub struct MCPToolApprovalFilter {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPListToolsTool {
     /// The JSON schema describing the tool's input.
     pub input_schema: serde_json::Value,

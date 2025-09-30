@@ -8,6 +8,7 @@ use super::{
 };
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventError {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -16,6 +17,7 @@ pub struct RealtimeServerEventError {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventSessionCreated {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -24,6 +26,7 @@ pub struct RealtimeServerEventSessionCreated {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventSessionUpdated {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -32,6 +35,7 @@ pub struct RealtimeServerEventSessionUpdated {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemAdded {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -42,6 +46,7 @@ pub struct RealtimeServerEventConversationItemAdded {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -52,6 +57,7 @@ pub struct RealtimeServerEventConversationItemDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferCommitted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -62,6 +68,7 @@ pub struct RealtimeServerEventInputAudioBufferCommitted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferCleared {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -72,6 +79,7 @@ pub struct RealtimeServerEventInputAudioBufferCleared {
 /// is the keypad that the user pressed. The `received_at` is the UTC Unix Timestamp
 /// that the server received the event.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferDtmfEventReceived {
     /// The telephone keypad that was pressed by the user.
     pub event: String,
@@ -80,6 +88,7 @@ pub struct RealtimeServerEventInputAudioBufferDtmfEventReceived {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferSpeechStarted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -92,6 +101,7 @@ pub struct RealtimeServerEventInputAudioBufferSpeechStarted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferSpeechStopped {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -103,6 +113,7 @@ pub struct RealtimeServerEventInputAudioBufferSpeechStopped {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventInputAudioBufferTimeoutTriggered {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -115,6 +126,7 @@ pub struct RealtimeServerEventInputAudioBufferTimeoutTriggered {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventOutputAudioBufferStarted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -123,6 +135,7 @@ pub struct RealtimeServerEventOutputAudioBufferStarted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventOutputAudioBufferStopped {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -131,6 +144,7 @@ pub struct RealtimeServerEventOutputAudioBufferStopped {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventOutputAudioBufferCleared {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -139,6 +153,7 @@ pub struct RealtimeServerEventOutputAudioBufferCleared {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemInputAudioTranscriptionCompleted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -156,6 +171,7 @@ pub struct RealtimeServerEventConversationItemInputAudioTranscriptionCompleted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemInputAudioTranscriptionDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -174,6 +190,7 @@ pub struct RealtimeServerEventConversationItemInputAudioTranscriptionDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemInputAudioTranscriptionFailed {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -186,6 +203,7 @@ pub struct RealtimeServerEventConversationItemInputAudioTranscriptionFailed {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemTruncated {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -198,6 +216,7 @@ pub struct RealtimeServerEventConversationItemTruncated {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemDeleted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -206,6 +225,7 @@ pub struct RealtimeServerEventConversationItemDeleted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemRetrieved {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -214,6 +234,7 @@ pub struct RealtimeServerEventConversationItemRetrieved {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventConversationItemInputAudioTranscriptionSegment {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -234,6 +255,7 @@ pub struct RealtimeServerEventConversationItemInputAudioTranscriptionSegment {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseCreated {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -242,6 +264,7 @@ pub struct RealtimeServerEventResponseCreated {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -250,6 +273,7 @@ pub struct RealtimeServerEventResponseDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseOutputItemAdded {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -262,6 +286,7 @@ pub struct RealtimeServerEventResponseOutputItemAdded {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseOutputItemDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -274,6 +299,7 @@ pub struct RealtimeServerEventResponseOutputItemDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ContentPart {
     #[serde(rename = "text")]
@@ -291,6 +317,7 @@ pub enum ContentPart {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseContentPartAdded {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -307,6 +334,7 @@ pub struct RealtimeServerEventResponseContentPartAdded {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseContentPartDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -323,6 +351,7 @@ pub struct RealtimeServerEventResponseContentPartDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseTextDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -339,6 +368,7 @@ pub struct RealtimeServerEventResponseTextDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseTextDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -355,6 +385,7 @@ pub struct RealtimeServerEventResponseTextDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseAudioTranscriptDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -371,6 +402,7 @@ pub struct RealtimeServerEventResponseAudioTranscriptDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseAudioTranscriptDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -387,6 +419,7 @@ pub struct RealtimeServerEventResponseAudioTranscriptDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseAudioDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -403,6 +436,7 @@ pub struct RealtimeServerEventResponseAudioDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseAudioDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -417,6 +451,7 @@ pub struct RealtimeServerEventResponseAudioDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseFunctionCallArgumentsDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -433,6 +468,7 @@ pub struct RealtimeServerEventResponseFunctionCallArgumentsDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseFunctionCallArgumentsDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -449,6 +485,7 @@ pub struct RealtimeServerEventResponseFunctionCallArgumentsDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeRateLimitName {
     Requests,
@@ -456,6 +493,7 @@ pub enum RealtimeRateLimitName {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeRateLimit {
     /// The name of the rate limit (requests, tokens).
     pub name: RealtimeRateLimitName,
@@ -468,6 +506,7 @@ pub struct RealtimeRateLimit {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventRateLimitsUpdated {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -475,6 +514,7 @@ pub struct RealtimeServerEventRateLimitsUpdated {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventMCPListToolsInProgress {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -483,6 +523,7 @@ pub struct RealtimeServerEventMCPListToolsInProgress {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventMCPListToolsCompleted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -491,6 +532,7 @@ pub struct RealtimeServerEventMCPListToolsCompleted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventMCPListToolsFailed {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -499,6 +541,7 @@ pub struct RealtimeServerEventMCPListToolsFailed {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseMCPCallArgumentsDelta {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -516,6 +559,7 @@ pub struct RealtimeServerEventResponseMCPCallArgumentsDelta {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseMCPCallArgumentsDone {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -530,6 +574,7 @@ pub struct RealtimeServerEventResponseMCPCallArgumentsDone {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseMCPCallInProgress {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -540,6 +585,7 @@ pub struct RealtimeServerEventResponseMCPCallInProgress {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseMCPCallCompleted {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -550,6 +596,7 @@ pub struct RealtimeServerEventResponseMCPCallCompleted {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeServerEventResponseMCPCallFailed {
     /// The unique ID of the server event.
     pub event_id: String,
@@ -561,6 +608,7 @@ pub struct RealtimeServerEventResponseMCPCallFailed {
 
 /// These are events emitted from the OpenAI Realtime WebSocket server to the client.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeServerEvent {
     /// Returned when an error occurs, which could be a client problem or a server problem.

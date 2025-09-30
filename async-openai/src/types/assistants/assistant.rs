@@ -10,18 +10,21 @@ use crate::types::assistants::{
 };
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolCodeInterpreterResources {
     ///A list of [file](https://platform.openai.com/docs/api-reference/files) IDs made available to the `code_interpreter`` tool. There can be a maximum of 20 files associated with the tool.
     pub file_ids: Vec<String>, // maxItems: 20
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolFileSearchResources {
     /// The ID of the [vector store](https://platform.openai.com/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
     pub vector_store_ids: Vec<String>,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolResources {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub code_interpreter: Option<AssistantToolCodeInterpreterResources>,
@@ -30,6 +33,7 @@ pub struct AssistantToolResources {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateAssistantToolResources {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub code_interpreter: Option<AssistantToolCodeInterpreterResources>,
@@ -38,6 +42,7 @@ pub struct CreateAssistantToolResources {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateAssistantToolFileSearchResources {
     ///  The [vector store](https://platform.openai.com/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
     pub vector_store_ids: Option<Vec<String>>,
@@ -46,6 +51,7 @@ pub struct CreateAssistantToolFileSearchResources {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantVectorStore {
     /// A list of [file](https://platform.openai.com/docs/api-reference/files) IDs to add to the vector store. There can be a maximum of 10000 files in a vector store.
     pub file_ids: Vec<String>,
@@ -58,6 +64,7 @@ pub struct AssistantVectorStore {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum AssistantVectorStoreChunkingStrategy {
     /// The default strategy. This strategy currently uses a `max_chunk_size_tokens` of `800` and `chunk_overlap_tokens` of `400`.
@@ -70,6 +77,7 @@ pub enum AssistantVectorStoreChunkingStrategy {
 
 /// Represents an `assistant` that can call the model and use tools.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -109,6 +117,7 @@ pub struct AssistantObject {
 ///
 /// **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub enum AssistantsApiResponseFormatOption {
     #[default]
     #[serde(rename = "auto")]
@@ -119,6 +128,7 @@ pub enum AssistantsApiResponseFormatOption {
 
 /// Retrieval tool
 #[derive(Clone, Serialize, Debug, Default, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolsFileSearch {
     /// Overrides for the file search tool.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -126,6 +136,7 @@ pub struct AssistantToolsFileSearch {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolsFileSearchOverrides {
     ///  The maximum number of results the file search tool should output. The default is 20 for gpt-4* models and 5 for gpt-3.5-turbo. This number should be between 1 and 50 inclusive.
     ///
@@ -135,6 +146,7 @@ pub struct AssistantToolsFileSearchOverrides {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum FileSearchRanker {
     #[serde(rename = "auto")]
     Auto,
@@ -146,6 +158,7 @@ pub enum FileSearchRanker {
 ///
 /// See the [file search tool documentation](https://platform.openai.com/docs/assistants/tools/file-search#customizing-file-search-settings) for more information.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileSearchRankingOptions {
     /// The ranker to use for the file search. If not specified will use the `auto` ranker.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -157,11 +170,13 @@ pub struct FileSearchRankingOptions {
 
 /// Function tool
 #[derive(Clone, Serialize, Debug, Default, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantToolsFunction {
     pub function: FunctionObject,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum AssistantTools {
@@ -171,6 +186,7 @@ pub enum AssistantTools {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateAssistantRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -219,6 +235,7 @@ pub struct CreateAssistantRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ModifyAssistantRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -267,6 +284,7 @@ pub struct ModifyAssistantRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteAssistantResponse {
     pub id: String,
     pub deleted: bool,
@@ -274,6 +292,7 @@ pub struct DeleteAssistantResponse {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListAssistantsResponse {
     pub object: String,
     pub data: Vec<AssistantObject>,
@@ -288,6 +307,7 @@ pub struct ListAssistantsResponse {
 /// `required` means the model must call one or more tools before responding to the user.
 /// Specifying a particular tool like `{"type": "file_search"}` or `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum AssistantsApiToolChoiceOption {
     #[default]
@@ -300,6 +320,7 @@ pub enum AssistantsApiToolChoiceOption {
 
 /// Specifies a tool the model should use. Use to force the model to call a specific tool.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantsNamedToolChoice {
     /// The type of the tool. If type is `function`, the function name must be set
     pub r#type: AssistantToolType,
@@ -308,6 +329,7 @@ pub struct AssistantsNamedToolChoice {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum AssistantToolType {
     #[default]

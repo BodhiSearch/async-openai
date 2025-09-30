@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::types::assistants::{FileSearchRankingOptions, ImageFile, LastError, RunStatus};
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RunStepType {
     MessageCreation,
@@ -13,6 +14,7 @@ pub enum RunStepType {
 
 /// Represents a step in execution of a run.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -61,6 +63,7 @@ pub struct RunStepObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepCompletionUsage {
     /// Number of completion tokens used over the course of the run step.
     pub completion_tokens: u32,
@@ -71,6 +74,7 @@ pub struct RunStepCompletionUsage {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum StepDetails {
@@ -80,11 +84,13 @@ pub enum StepDetails {
 
 /// Details of the message creation by the run step.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsMessageCreationObject {
     pub message_creation: MessageCreation,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageCreation {
     /// The ID of the message that was created by this run step.
     pub message_id: String,
@@ -92,12 +98,14 @@ pub struct MessageCreation {
 
 /// Details of the tool call.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsObject {
     /// An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `file_search`, or `function`.
     pub tool_calls: Vec<RunStepDetailsToolCalls>,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum RunStepDetailsToolCalls {
@@ -109,6 +117,7 @@ pub enum RunStepDetailsToolCalls {
 
 /// Code interpreter tool call
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsCodeObject {
     /// The ID of the tool call.
     pub id: String,
@@ -118,6 +127,7 @@ pub struct RunStepDetailsToolCallsCodeObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreter {
     /// The input to the Code Interpreter tool call.
     pub input: String,
@@ -126,6 +136,7 @@ pub struct CodeInterpreter {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "lowercase")]
 pub enum CodeInterpreterOutput {
@@ -137,12 +148,14 @@ pub enum CodeInterpreterOutput {
 
 /// Text output from the Code Interpreter tool call as part of a run step.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsCodeOutputLogsObject {
     /// The text output from the Code Interpreter tool call.
     pub logs: String,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsCodeOutputImageObject {
     /// The [file](https://platform.openai.com/docs/api-reference/files) ID of the image.
     pub image: ImageFile,
@@ -150,6 +163,7 @@ pub struct RunStepDetailsToolCallsCodeOutputImageObject {
 
 /// File search tool call
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsFileSearchObject {
     /// The ID of the tool call object.
     pub id: String,
@@ -158,6 +172,7 @@ pub struct RunStepDetailsToolCallsFileSearchObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsFileSearchObjectFileSearch {
     pub ranking_options: Option<FileSearchRankingOptions>,
     /// The results of the file search.
@@ -166,6 +181,7 @@ pub struct RunStepDetailsToolCallsFileSearchObjectFileSearch {
 
 /// A result instance of the file search.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsFileSearchResultObject {
     /// The ID of the file that result was found in.
     pub file_id: String,
@@ -178,6 +194,7 @@ pub struct RunStepDetailsToolCallsFileSearchResultObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsFileSearchResultObjectContent {
     // note: type is text hence omitted from struct
     /// The text content of the file.
@@ -185,6 +202,7 @@ pub struct RunStepDetailsToolCallsFileSearchResultObjectContent {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDetailsToolCallsFunctionObject {
     /// The ID of the tool call object.
     pub id: String,
@@ -193,6 +211,7 @@ pub struct RunStepDetailsToolCallsFunctionObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepFunctionObject {
     /// The name of the function.
     pub name: String,
@@ -203,6 +222,7 @@ pub struct RunStepFunctionObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepFunctionObjectDelta {
     /// The name of the function.
     pub name: Option<String>,
@@ -213,6 +233,7 @@ pub struct RunStepFunctionObjectDelta {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListRunStepsResponse {
     pub object: String,
     pub data: Vec<RunStepObject>,
@@ -223,6 +244,7 @@ pub struct ListRunStepsResponse {
 
 /// Represents a run step delta i.e. any changed fields on a run step during streaming.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaObject {
     /// The identifier of the run step, which can be referenced in API endpoints.
     pub id: String,
@@ -233,11 +255,13 @@ pub struct RunStepDeltaObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDelta {
     pub step_details: DeltaStepDetails,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum DeltaStepDetails {
@@ -247,18 +271,21 @@ pub enum DeltaStepDetails {
 
 /// Details of the message creation by the run step.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsMessageCreationObject {
     pub message_creation: Option<MessageCreation>,
 }
 
 /// Details of the tool call.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsObject {
     /// An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `file_search`, or `function`.
     pub tool_calls: Option<Vec<RunStepDeltaStepDetailsToolCalls>>,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum RunStepDeltaStepDetailsToolCalls {
@@ -269,6 +296,7 @@ pub enum RunStepDeltaStepDetailsToolCalls {
 
 /// Details of the Code Interpreter tool call the run step was involved in.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsCodeObject {
     /// The index of the tool call in the tool calls array.
     pub index: u32,
@@ -279,6 +307,7 @@ pub struct RunStepDeltaStepDetailsToolCallsCodeObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeltaCodeInterpreter {
     /// The input to the Code Interpreter tool call.
     pub input: Option<String>,
@@ -287,6 +316,7 @@ pub struct DeltaCodeInterpreter {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "lowercase")]
 pub enum DeltaCodeInterpreterOutput {
@@ -296,6 +326,7 @@ pub enum DeltaCodeInterpreterOutput {
 
 /// Text output from the Code Interpreter tool call as part of a run step.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject {
     /// The index of the output in the outputs array.
     pub index: u32,
@@ -305,6 +336,7 @@ pub struct RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject {
 
 /// Code interpreter image output
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsCodeOutputImageObject {
     /// The index of the output in the outputs array.
     pub index: u32,
@@ -313,6 +345,7 @@ pub struct RunStepDeltaStepDetailsToolCallsCodeOutputImageObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsFileSearchObject {
     /// The index of the tool call in the tool calls array.
     pub index: u32,
@@ -324,6 +357,7 @@ pub struct RunStepDeltaStepDetailsToolCallsFileSearchObject {
 
 /// Function tool call
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RunStepDeltaStepDetailsToolCallsFunctionObject {
     /// The index of the tool call in the tool calls array.
     pub index: u32,

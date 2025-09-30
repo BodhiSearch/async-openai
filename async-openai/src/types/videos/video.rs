@@ -5,6 +5,7 @@ use crate::error::OpenAIError;
 use crate::types::videos::ImageInput;
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum VideoSize {
     #[default]
     #[serde(rename = "720x1280")]
@@ -18,6 +19,7 @@ pub enum VideoSize {
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum VideoSeconds {
     #[default]
     #[serde(rename = "4")]
@@ -51,6 +53,7 @@ pub struct CreateVideoRequest {
 }
 
 #[derive(Clone, Default, Debug, Builder, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "RemixVideoRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -61,6 +64,7 @@ pub struct RemixVideoRequest {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoResourceError {
     pub code: String,
     pub message: String,
@@ -68,6 +72,7 @@ pub struct VideoResourceError {
 
 /// Structured information describing a generated video job.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoResource {
     /// Unix timestamp (seconds) for when the job completed, if finished.
     pub completed_at: Option<u64>,
@@ -107,6 +112,7 @@ pub struct VideoResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VideoStatus {
     Queued,
@@ -116,6 +122,7 @@ pub enum VideoStatus {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeletedVideoResource {
     pub id: String,
     pub object: String,
@@ -123,6 +130,7 @@ pub struct DeletedVideoResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoListResource {
     pub data: Vec<VideoResource>,
     pub object: String,
@@ -132,6 +140,7 @@ pub struct VideoListResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum VideoVariant {
     #[default]

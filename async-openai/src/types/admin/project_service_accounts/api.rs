@@ -4,6 +4,7 @@ use serde::Serialize;
 
 /// Query parameters for listing project service accounts.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListProjectServiceAccountsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

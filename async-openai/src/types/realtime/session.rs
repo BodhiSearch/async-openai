@@ -6,6 +6,7 @@ use crate::types::{
 };
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AudioTranscription {
     /// The language of the input audio. Supplying the input language in
     /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format will improve accuracy and latency.
@@ -25,6 +26,7 @@ pub struct AudioTranscription {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeTurnDetection {
     /// Server-side voice activity detection (VAD) which flips on when user speech is detected
@@ -99,6 +101,7 @@ pub enum RealtimeTurnDetection {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub enum MaxOutputTokens {
     #[serde(rename = "inf")]
     Inf,
@@ -107,6 +110,7 @@ pub enum MaxOutputTokens {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeFunctionTool {
     /// The name of the function.
     pub name: String,
@@ -118,6 +122,7 @@ pub struct RealtimeFunctionTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeTool {
     #[serde(rename = "function")]
@@ -129,12 +134,14 @@ pub enum RealtimeTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum FunctionType {
     Function,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ToolChoice {
     /// Use this option to force the model to call a specific function.
@@ -147,6 +154,7 @@ pub enum ToolChoice {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeVoice {
     Alloy,
@@ -164,6 +172,7 @@ pub enum RealtimeVoice {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeAudioFormats {
     /// The PCM audio format. Only a 24kHz sample rate is supported.
@@ -181,12 +190,14 @@ pub enum RealtimeAudioFormats {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct G711ULAWAudioFormat {
     pub sample_rate: u32,
     pub channels: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AudioInput {
     /// The format of the input audio.
     pub format: RealtimeAudioFormats,
@@ -220,6 +231,7 @@ pub struct AudioInput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AudioOutput {
     /// The format of the output audio.
     pub format: RealtimeAudioFormats,
@@ -245,6 +257,7 @@ pub struct Audio {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Tracing {
     /// Enables tracing and sets default values for tracing configuration options. Always `auto`.
@@ -255,6 +268,7 @@ pub enum Tracing {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TracingConfiguration {
     /// The group id to attach to this trace to enable filtering and grouping in the Traces Dashboard.
     pub group_id: String,
@@ -266,6 +280,7 @@ pub struct TracingConfiguration {
 
 /// The truncation strategy to use for the session.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeTruncation {
     /// `auto` is the default truncation strategy.
@@ -282,6 +297,7 @@ pub enum RealtimeTruncation {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RetentionRatioTruncation {
     /// Fraction of post-instruction conversation tokens to retain (0.0 - 1.0) when the conversation
     ///  exceeds the input token limit. Setting this to 0.8 means that messages will be dropped
@@ -299,6 +315,7 @@ pub struct RetentionRatioTruncation {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TokenLimits {
     /// Maximum tokens allowed in the conversation after instructions (which including tool
     /// definitions). For example, setting this to 5,000 would mean that truncation would occur
@@ -308,6 +325,7 @@ pub struct TokenLimits {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum Session {
     // Boxed as per clippy suggestion:
@@ -322,6 +340,7 @@ pub enum Session {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeSessionConfiguration {
     Realtime(RealtimeSession),
@@ -336,6 +355,7 @@ impl Default for RealtimeSessionConfiguration {
 /// Realtime session object configuration.
 /// openapi spec type: RealtimeSessionCreateRequestGA
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeSession {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub audio: Option<Audio>,
@@ -418,6 +438,7 @@ pub struct RealtimeSession {
 /// headphones, `far_field` is for far-field microphones such as laptop or conference
 /// room microphones.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum NoiseReductionType {
     NearField,
@@ -432,6 +453,7 @@ pub struct TranscriptionAudio {
 /// Realtime transcription session object configuration.
 /// openapi spec type: RealtimeTranscriptionSessionCreateRequestGA
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeTranscriptionSession {
     /// Configuration for input and output audio.
     pub audio: TranscriptionAudio,

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Represents an individual certificate uploaded to the organization.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Certificate {
     /// The object type. Can be `certificate`, `organization.certificate`, or `organization.project.certificate`.
     pub object: String,
@@ -23,6 +24,7 @@ pub struct Certificate {
 
 /// Details about a certificate.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CertificateDetails {
     /// The Unix timestamp (in seconds) of when the certificate becomes valid.
     pub valid_at: u64,
@@ -36,6 +38,7 @@ pub struct CertificateDetails {
 
 /// Response for listing certificates.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListCertificatesResponse {
     /// The object type, which is always `list`.
     pub object: String,
@@ -53,6 +56,7 @@ pub struct ListCertificatesResponse {
 
 /// Request for uploading a certificate.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UploadCertificateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -68,6 +72,7 @@ pub struct UploadCertificateRequest {
 
 /// Request for modifying a certificate.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ModifyCertificateRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -80,6 +85,7 @@ pub struct ModifyCertificateRequest {
 
 /// Request for toggling (activating/deactivating) certificates.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ToggleCertificatesRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -92,6 +98,7 @@ pub struct ToggleCertificatesRequest {
 
 /// Response for deleting a certificate.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteCertificateResponse {
     /// The object type, which is always `certificate.deleted`.
     pub object: String,

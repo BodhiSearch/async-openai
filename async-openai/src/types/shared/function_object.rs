@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::OpenAIError;
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "FunctionObjectArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

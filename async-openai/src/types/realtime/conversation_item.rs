@@ -6,6 +6,7 @@ use crate::types::{
 };
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct SystemMessageContent {
     /// The text content.
     pub text: String,
@@ -14,6 +15,7 @@ pub struct SystemMessageContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeConversationItemMessageSystem {
     /// The content of the message.
     pub content: Vec<SystemMessageContent>,
@@ -30,12 +32,14 @@ pub struct RealtimeConversationItemMessageSystem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct UserMessageContentInputText {
     /// The text content (for `input_text`).
     pub text: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct UserMessageContentInputAudio {
     /// Base64-encoded audio bytes (for `input_audio`), these will be parsed as the
     /// format specified in the session input audio type configuration.
@@ -47,6 +51,7 @@ pub struct UserMessageContentInputAudio {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ImageDetail {
     #[default]
@@ -56,6 +61,7 @@ pub enum ImageDetail {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct UserMessageContentInputImage {
     /// Base64-encoded image bytes (for `input_image`) as a data URI.
     /// For example `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...`.
@@ -66,6 +72,7 @@ pub struct UserMessageContentInputImage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum UserMessageContent {
@@ -75,6 +82,7 @@ pub enum UserMessageContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeConversationItemMessageUser {
     /// The content of the message.
     pub content: Vec<UserMessageContent>,
@@ -94,12 +102,14 @@ pub struct RealtimeConversationItemMessageUser {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantMessageContentOutputText {
     /// The text content
     pub text: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct AssistantMessageContentOutputAudio {
     /// Base64-encoded audio bytes, these will be parsed as the format specified
     /// in the session output audio type configuration. This defaults to PCM 16-bit
@@ -111,6 +121,7 @@ pub struct AssistantMessageContentOutputAudio {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum AssistantMessageContent {
@@ -119,6 +130,7 @@ pub enum AssistantMessageContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeConversationItemMessageAssistant {
     /// The content of the message.
     pub content: Vec<AssistantMessageContent>,
@@ -138,6 +150,7 @@ pub struct RealtimeConversationItemMessageAssistant {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "role")]
 #[serde(rename_all = "lowercase")]
 pub enum RealtimeConversationItemMessage {
@@ -147,6 +160,7 @@ pub enum RealtimeConversationItemMessage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeConversationItemFunctionCall {
     /// The arguments of the function call. This is a JSON-encoded string representing
     /// the arguments passed to the function, for example {"arg1": "value1", "arg2": 42}.
@@ -172,6 +186,7 @@ pub struct RealtimeConversationItemFunctionCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeConversationItemFunctionCallOutput {
     /// The ID of the function call this output is for.
     pub call_id: String,
@@ -194,6 +209,7 @@ pub struct RealtimeConversationItemFunctionCallOutput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeMCPApprovalResponse {
     /// The ID of the approval request being answered.
     pub approval_request_id: String,
@@ -209,6 +225,7 @@ pub struct RealtimeMCPApprovalResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeMCPListTools {
     /// The label of the MCP server.
     pub server_label: String,
@@ -221,6 +238,7 @@ pub struct RealtimeMCPListTools {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeMCPApprovalRequest {
     /// A JSON string of arguments for the tool.
     pub arguments: String,
@@ -236,9 +254,11 @@ pub struct RealtimeMCPApprovalRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeMCPProtocolError {}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum RealtimeMCPToolCallError {
     ProtocolError(ErrorCodeMessage),
@@ -247,6 +267,7 @@ pub enum RealtimeMCPToolCallError {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeMCPToolCall {
     /// A JSON string of the arguments passed to the tool.
     pub arguments: String,
@@ -271,6 +292,7 @@ pub struct RealtimeMCPToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum RealtimeConversationItem {
     Message(RealtimeConversationItemMessage),

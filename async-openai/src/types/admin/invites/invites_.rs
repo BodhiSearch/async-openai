@@ -4,6 +4,7 @@ use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum InviteStatus {
     Accepted,
@@ -12,6 +13,7 @@ pub enum InviteStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "InviteRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -23,6 +25,7 @@ pub struct InviteRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InviteListResponse {
     pub object: String,
     pub data: Vec<Invite>,
@@ -32,6 +35,7 @@ pub struct InviteListResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InviteDeleteResponse {
     /// The object type, which is always `organization.invite.deleted`
     pub object: String,
@@ -41,6 +45,7 @@ pub struct InviteDeleteResponse {
 
 /// Represents an individual `invite` to the organization.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Invite {
     /// The object type, which is always `organization.invite`
     pub object: String,

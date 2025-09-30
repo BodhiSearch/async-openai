@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ResponseFormat {
     /// The type of response format being defined: `text`
@@ -14,6 +15,7 @@ pub enum ResponseFormat {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseFormatJsonSchema {
     /// A description of what the response format is for, used by the model to determine how to respond in the format.
     #[serde(skip_serializing_if = "Option::is_none")]
