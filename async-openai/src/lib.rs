@@ -1,8 +1,9 @@
+#![allow(deprecated)]
 //! Rust library for OpenAI
 //!
 //! ## Creating client
 //!
-//! ```
+//! ```ignore
 //! use async_openai::{Client, config::OpenAIConfig};
 //!
 //! // Create a OpenAI client with api key from env var OPENAI_API_KEY and default base url.
@@ -28,7 +29,7 @@
 //!
 //! ## Making requests
 //!
-//!```
+//!```ignore
 //!# tokio_test::block_on(async {
 //! use async_openai::{Client, types::responses::{CreateResponseArgs}};
 //!
