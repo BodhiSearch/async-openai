@@ -84,6 +84,7 @@ pub enum StreamError {
 
 /// OpenAI API returns error object on failure
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ApiError {
     pub message: String,
     pub r#type: Option<String>,
@@ -120,6 +121,7 @@ impl std::error::Error for ApiError {}
 
 /// Wrapper to deserialize the error object nested in "error" JSON key
 #[derive(Debug, Deserialize, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct WrappedError {
     pub error: ApiError,
 }

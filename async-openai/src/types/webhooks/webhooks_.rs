@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sent when a batch API request has been cancelled.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookBatchCancelled {
     /// The Unix timestamp (in seconds) of when the batch API request was cancelled.
     pub created_at: u64,
@@ -19,6 +20,7 @@ pub struct WebhookBatchCancelled {
 
 /// Sent when a batch API request has been completed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookBatchCompleted {
     /// The Unix timestamp (in seconds) of when the batch API request was completed.
     pub created_at: u64,
@@ -36,6 +38,7 @@ pub struct WebhookBatchCompleted {
 
 /// Sent when a batch API request has expired.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookBatchExpired {
     /// The Unix timestamp (in seconds) of when the batch API request expired.
     pub created_at: u64,
@@ -53,6 +56,7 @@ pub struct WebhookBatchExpired {
 
 /// Sent when a batch API request has failed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookBatchFailed {
     /// The Unix timestamp (in seconds) of when the batch API request failed.
     pub created_at: u64,
@@ -70,6 +74,7 @@ pub struct WebhookBatchFailed {
 
 /// Data payload for batch webhook events.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookBatchData {
     /// The unique ID of the batch API request.
     pub id: String,
@@ -77,6 +82,7 @@ pub struct WebhookBatchData {
 
 /// Sent when an eval run has been canceled.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookEvalRunCanceled {
     /// The Unix timestamp (in seconds) of when the eval run was canceled.
     pub created_at: u64,
@@ -94,6 +100,7 @@ pub struct WebhookEvalRunCanceled {
 
 /// Sent when an eval run has failed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookEvalRunFailed {
     /// The Unix timestamp (in seconds) of when the eval run failed.
     pub created_at: u64,
@@ -111,6 +118,7 @@ pub struct WebhookEvalRunFailed {
 
 /// Sent when an eval run has succeeded.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookEvalRunSucceeded {
     /// The Unix timestamp (in seconds) of when the eval run succeeded.
     pub created_at: u64,
@@ -128,6 +136,7 @@ pub struct WebhookEvalRunSucceeded {
 
 /// Data payload for eval run webhook events.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookEvalRunData {
     /// The unique ID of the eval run.
     pub id: String,
@@ -135,6 +144,7 @@ pub struct WebhookEvalRunData {
 
 /// Sent when a fine-tuning job has been cancelled.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookFineTuningJobCancelled {
     /// The Unix timestamp (in seconds) of when the fine-tuning job was cancelled.
     pub created_at: u64,
@@ -152,6 +162,7 @@ pub struct WebhookFineTuningJobCancelled {
 
 /// Sent when a fine-tuning job has failed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookFineTuningJobFailed {
     /// The Unix timestamp (in seconds) of when the fine-tuning job failed.
     pub created_at: u64,
@@ -169,6 +180,7 @@ pub struct WebhookFineTuningJobFailed {
 
 /// Sent when a fine-tuning job has succeeded.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookFineTuningJobSucceeded {
     /// The Unix timestamp (in seconds) of when the fine-tuning job succeeded.
     pub created_at: u64,
@@ -186,6 +198,7 @@ pub struct WebhookFineTuningJobSucceeded {
 
 /// Data payload for fine-tuning job webhook events.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookFineTuningJobData {
     /// The unique ID of the fine-tuning job.
     pub id: String,
@@ -195,6 +208,7 @@ pub struct WebhookFineTuningJobData {
 
 /// Sent when Realtime API receives an incoming SIP call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookRealtimeCallIncoming {
     /// The Unix timestamp (in seconds) of when the model response was completed.
     pub created_at: u64,
@@ -212,6 +226,7 @@ pub struct WebhookRealtimeCallIncoming {
 
 /// Data payload for realtime call webhook events.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookRealtimeCallData {
     /// The unique ID of this call.
     pub call_id: String,
@@ -222,6 +237,7 @@ pub struct WebhookRealtimeCallData {
 
 /// A header from the SIP Invite.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SipHeader {
     /// Name of the SIP Header.
     pub name: String,
@@ -232,6 +248,7 @@ pub struct SipHeader {
 
 /// Sent when a background response has been cancelled.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookResponseCancelled {
     /// The Unix timestamp (in seconds) of when the model response was cancelled.
     pub created_at: u64,
@@ -249,6 +266,7 @@ pub struct WebhookResponseCancelled {
 
 /// Sent when a background response has been completed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookResponseCompleted {
     /// The Unix timestamp (in seconds) of when the model response was completed.
     pub created_at: u64,
@@ -266,6 +284,7 @@ pub struct WebhookResponseCompleted {
 
 /// Sent when a background response has failed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookResponseFailed {
     /// The Unix timestamp (in seconds) of when the model response failed.
     pub created_at: u64,
@@ -283,6 +302,7 @@ pub struct WebhookResponseFailed {
 
 /// Sent when a background response has been interrupted.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookResponseIncomplete {
     /// The Unix timestamp (in seconds) of when the model response was interrupted.
     pub created_at: u64,
@@ -300,6 +320,7 @@ pub struct WebhookResponseIncomplete {
 
 /// Data payload for response webhook events.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebhookResponseData {
     /// The unique ID of the model response.
     pub id: String,
@@ -308,6 +329,7 @@ pub struct WebhookResponseData {
 // EventType and EventId implementations for response events
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum WebhookEvent {
     #[serde(rename = "batch.cancelled")]

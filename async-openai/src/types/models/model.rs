@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Describes an OpenAI model offering that can be used with the API.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Model {
     /// The model identifier, which can be referenced in the API endpoints.
     pub id: String,
@@ -14,12 +15,14 @@ pub struct Model {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListModelResponse {
     pub object: String,
     pub data: Vec<Model>,
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteModelResponse {
     pub id: String,
     pub object: String,

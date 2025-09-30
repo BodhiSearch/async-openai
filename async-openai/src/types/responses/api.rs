@@ -6,6 +6,7 @@ use crate::types::responses::{IncludeParam, ListOrder};
 
 /// Query parameters for listing conversation items.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListConversationItemsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -28,6 +29,7 @@ pub struct ListConversationItemsQuery {
 
 /// Sort order for listing input items.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListInputItemsOrder {
     /// Ascending order
@@ -38,6 +40,7 @@ pub enum ListInputItemsOrder {
 
 /// Query parameters for getting a response.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetResponseQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -60,6 +63,7 @@ pub struct GetResponseQuery {
 
 /// Query parameters for listing input items.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListInputItemsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -82,6 +86,7 @@ pub struct ListInputItemsQuery {
 
 /// Query parameters for getting a conversation item.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetConversationItemQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -95,6 +100,7 @@ pub struct GetConversationItemQuery {
 
 /// Query parameters for creating conversation items.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateConversationItemsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

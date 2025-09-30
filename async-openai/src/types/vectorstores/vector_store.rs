@@ -11,6 +11,7 @@ use crate::{
 use crate::types::vectorstores::StaticChunkingStrategy;
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateVectorStoreRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -42,6 +43,7 @@ pub struct CreateVectorStoreRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum ChunkingStrategyRequestParam {
     /// The default strategy. This strategy currently uses a `max_chunk_size_tokens` of `800` and `chunk_overlap_tokens` of `400`.
@@ -57,6 +59,7 @@ pub enum ChunkingStrategyRequestParam {
 
 /// Vector store expiration policy
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreExpirationAfter {
     /// Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`.
     pub anchor: String,
@@ -66,6 +69,7 @@ pub struct VectorStoreExpirationAfter {
 
 /// A vector store is a collection of processed files can be used by the `file_search` tool.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -91,6 +95,7 @@ pub struct VectorStoreObject {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VectorStoreStatus {
     Expired,
@@ -99,6 +104,7 @@ pub enum VectorStoreStatus {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileCounts {
     /// The number of files that are currently being processed.
     pub in_progress: u32,
@@ -113,6 +119,7 @@ pub struct VectorStoreFileCounts {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListVectorStoresResponse {
     pub object: String,
     pub data: Vec<VectorStoreObject>,
@@ -122,6 +129,7 @@ pub struct ListVectorStoresResponse {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteVectorStoreResponse {
     pub id: String,
     pub object: String,
@@ -129,6 +137,7 @@ pub struct DeleteVectorStoreResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UpdateVectorStoreRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -144,6 +153,7 @@ pub struct UpdateVectorStoreRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListVectorStoreFilesResponse {
     pub object: String,
     pub data: Vec<VectorStoreFileObject>,
@@ -153,6 +163,7 @@ pub struct ListVectorStoreFilesResponse {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -175,6 +186,7 @@ pub struct VectorStoreFileObject {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VectorStoreFileStatus {
     InProgress,
@@ -184,6 +196,7 @@ pub enum VectorStoreFileStatus {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileError {
     pub code: VectorStoreFileErrorCode,
     /// A human-readable description of the error.
@@ -191,6 +204,7 @@ pub struct VectorStoreFileError {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VectorStoreFileErrorCode {
     ServerError,
@@ -199,6 +213,7 @@ pub enum VectorStoreFileErrorCode {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "lowercase")]
 pub enum ChunkingStrategyResponse {
@@ -210,6 +225,7 @@ pub enum ChunkingStrategyResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(transparent)]
 pub struct VectorStoreFileAttributes(pub HashMap<String, AttributeValue>);
 
@@ -220,6 +236,7 @@ impl From<HashMap<String, AttributeValue>> for VectorStoreFileAttributes {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateVectorStoreFileRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -235,6 +252,7 @@ pub struct CreateVectorStoreFileRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteVectorStoreFileResponse {
     pub id: String,
     pub object: String,
@@ -242,6 +260,7 @@ pub struct DeleteVectorStoreFileResponse {
 }
 
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateVectorStoreFileBatchRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -268,6 +287,7 @@ pub struct CreateVectorStoreFileBatchRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VectorStoreFileBatchStatus {
     InProgress,
@@ -277,6 +297,7 @@ pub enum VectorStoreFileBatchStatus {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileBatchCounts {
     /// The number of files that are currently being processed.
     pub in_progress: u32,
@@ -292,6 +313,7 @@ pub struct VectorStoreFileBatchCounts {
 
 /// A batch of files attached to a vector store.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileBatchObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -308,6 +330,7 @@ pub struct VectorStoreFileBatchObject {
 
 /// Represents the parsed content of a vector store file.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileContentResponse {
     /// The object type, which is always `vector_store.file_content.page`
     pub object: String,
@@ -324,6 +347,7 @@ pub struct VectorStoreFileContentResponse {
 
 /// Represents the parsed content of a vector store file.
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreFileContentObject {
     /// The content type (currently only `"text"`)
     pub r#type: String,
@@ -333,6 +357,7 @@ pub struct VectorStoreFileContentObject {
 }
 
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "VectorStoreSearchRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -360,6 +385,7 @@ pub struct VectorStoreSearchRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum VectorStoreSearchQuery {
     /// A single query to search for.
@@ -394,6 +420,7 @@ impl From<Vec<String>> for VectorStoreSearchQuery {
 
 /// The value to compare against the attribute key; supports string, number, or boolean types.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum AttributeValue {
     String(String),
@@ -427,6 +454,7 @@ impl From<&str> for AttributeValue {
 
 /// Ranking options for search.
 #[derive(Debug, Serialize, Default, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RankingOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ranker: Option<Ranker>,
@@ -436,6 +464,7 @@ pub struct RankingOptions {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum Ranker {
     /// Enable re-ranking; set to `none` to disable, which can help reduce latency.
     #[serde(rename = "none")]
@@ -447,6 +476,7 @@ pub enum Ranker {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreSearchResultsPage {
     /// The object type, which is always `vector_store.search_results.page`.
     pub object: String,
@@ -465,6 +495,7 @@ pub struct VectorStoreSearchResultsPage {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreSearchResultItem {
     /// The ID of the vector store file.
     pub file_id: String,
@@ -483,6 +514,7 @@ pub struct VectorStoreSearchResultItem {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VectorStoreSearchResultContentObject {
     /// The type of content
     pub r#type: String,
@@ -492,6 +524,7 @@ pub struct VectorStoreSearchResultContentObject {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UpdateVectorStoreFileAttributesRequest {
     pub attributes: VectorStoreFileAttributes,
 }

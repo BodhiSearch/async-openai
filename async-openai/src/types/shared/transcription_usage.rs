@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TokenUsageInputTokenDetails {
     /// Number of audio tokens billed for this request.
     pub audio_tokens: u32,
@@ -9,6 +10,7 @@ pub struct TokenUsageInputTokenDetails {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptTextUsageTokens {
     /// Number of input tokens billed for this request.
     pub input_tokens: u32,
@@ -21,12 +23,14 @@ pub struct TranscriptTextUsageTokens {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptTextUsageDuration {
     ///Duration of the input audio in seconds.
     pub seconds: f32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum TranscriptionUsage {
     #[serde(rename = "tokens")]

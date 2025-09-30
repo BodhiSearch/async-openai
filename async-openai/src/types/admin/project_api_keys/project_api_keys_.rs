@@ -5,6 +5,7 @@ use crate::types::admin::project_users::ProjectUser;
 
 /// Represents an individual API key in a project.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectApiKey {
     /// The object type, which is always `organization.project.api_key`.
     pub object: String,
@@ -21,6 +22,7 @@ pub struct ProjectApiKey {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename = "snake_case")]
 pub enum ProjectApiKeyOwnerType {
     User,
@@ -29,6 +31,7 @@ pub enum ProjectApiKeyOwnerType {
 
 /// Represents the owner of a project API key.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectApiKeyOwner {
     /// The type of owner, which is either `user` or `service_account`.
     pub r#type: ProjectApiKeyOwnerType,
@@ -40,6 +43,7 @@ pub struct ProjectApiKeyOwner {
 
 /// Represents the response object for listing project API keys.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectApiKeyListResponse {
     /// The object type, which is always `list`.
     pub object: String,
@@ -55,6 +59,7 @@ pub struct ProjectApiKeyListResponse {
 
 /// Represents the response object for deleting a project API key.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectApiKeyDeleteResponse {
     /// The object type, which is always `organization.project.api_key.deleted`.
     pub object: String,

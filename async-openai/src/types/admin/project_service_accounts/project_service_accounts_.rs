@@ -4,6 +4,7 @@ use crate::types::admin::project_users::ProjectUserRole;
 
 /// Represents an individual service account in a project.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccount {
     /// The object type, which is always `organization.project.service_account`.
     pub object: String,
@@ -19,6 +20,7 @@ pub struct ProjectServiceAccount {
 
 /// Represents the response object for listing project service accounts.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccountListResponse {
     /// The object type, which is always `list`.
     pub object: String,
@@ -34,6 +36,7 @@ pub struct ProjectServiceAccountListResponse {
 
 /// Represents the request object for creating a project service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccountCreateRequest {
     /// The name of the service account being created.
     pub name: String,
@@ -41,6 +44,7 @@ pub struct ProjectServiceAccountCreateRequest {
 
 /// Represents the response object for creating a project service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccountCreateResponse {
     /// The object type, which is always `organization.project.service_account`.
     pub object: String,
@@ -58,6 +62,7 @@ pub struct ProjectServiceAccountCreateResponse {
 
 /// Represents the API key associated with a project service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccountApiKey {
     /// The object type, which is always `organization.project.service_account.api_key`.
     pub object: String,
@@ -73,6 +78,7 @@ pub struct ProjectServiceAccountApiKey {
 
 /// Represents the response object for deleting a project service account.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ProjectServiceAccountDeleteResponse {
     /// The object type, which is always `organization.project.service_account.deleted`.
     pub object: String,

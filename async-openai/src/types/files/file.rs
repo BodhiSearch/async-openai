@@ -11,6 +11,7 @@ pub struct FileInput {
 }
 
 #[derive(Debug, Default, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum FilePurpose {
     Assistants,
     Batch,
@@ -22,6 +23,7 @@ pub enum FilePurpose {
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub enum FileExpirationAfterAnchor {
     #[default]
     #[serde(rename = "created_at")]
@@ -29,6 +31,7 @@ pub enum FileExpirationAfterAnchor {
 }
 
 #[derive(Debug, Default, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileExpirationAfter {
     /// Anchor timestamp after which the expiration policy applies. Supported anchors: `created_at`.
     pub anchor: FileExpirationAfterAnchor,
@@ -61,6 +64,7 @@ pub struct CreateFileRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ListFilesResponse {
     pub object: String,
     pub data: Vec<OpenAIFile>,
@@ -70,6 +74,7 @@ pub struct ListFilesResponse {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteFileResponse {
     pub id: String,
     pub object: String,
@@ -77,6 +82,7 @@ pub struct DeleteFileResponse {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum OpenAIFilePurpose {
     #[serde(rename = "assistants")]
     Assistants,
@@ -98,6 +104,7 @@ pub enum OpenAIFilePurpose {
 
 /// The `File` object represents a document that has been uploaded to OpenAI.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct OpenAIFile {
     /// The file identifier, which can be referenced in the API endpoints.
     pub id: String,

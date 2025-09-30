@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeAPIError {
     /// The type of error (e.g., "invalid_request_error", "server_error").
     pub r#type: String,
@@ -19,12 +20,14 @@ pub struct RealtimeAPIError {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ErrorCodeMessage {
     pub code: String,
     pub message: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct ErrorMessage {
     pub message: String,
 }

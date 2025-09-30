@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 
 /// Summary information about a group returned in role assignment responses.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Group {
     /// The object type, which is always `group`.
     pub object: String,
@@ -21,6 +22,7 @@ pub struct Group {
 
 /// Details about an organization group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupResponse {
     /// Identifier for the group.
     pub id: String,
@@ -34,6 +36,7 @@ pub struct GroupResponse {
 
 /// Paginated list of organization groups.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupListResource {
     /// The object type, which is always `list`.
     pub object: String,
@@ -47,6 +50,7 @@ pub struct GroupListResource {
 
 /// Confirmation payload returned after deleting a group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupDeletedResource {
     /// The object type, which is always `group.deleted`.
     pub object: String,
@@ -58,6 +62,7 @@ pub struct GroupDeletedResource {
 
 /// Response returned after updating a group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupResourceWithSuccess {
     /// Identifier for the group.
     pub id: String,
@@ -71,6 +76,7 @@ pub struct GroupResourceWithSuccess {
 
 /// Request payload for creating a new group in the organization.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateGroupRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -83,6 +89,7 @@ pub struct CreateGroupBody {
 
 /// Request payload for updating the details of an existing group.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UpdateGroupRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -95,6 +102,7 @@ pub struct UpdateGroupBody {
 
 /// Request payload for adding a user to a group.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateGroupUserRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -107,6 +115,7 @@ pub struct CreateGroupUserBody {
 
 /// Confirmation payload returned after adding a user to a group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupUserAssignment {
     /// The object type, which is always `group.user`.
     pub object: String,
@@ -118,6 +127,7 @@ pub struct GroupUserAssignment {
 
 /// Confirmation payload returned after removing a user from a group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupUserDeletedResource {
     /// The object type, which is always `group.user.deleted`.
     pub object: String,
@@ -127,6 +137,7 @@ pub struct GroupUserDeletedResource {
 
 /// Role assignment linking a group to a role.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupRoleAssignment {
     /// The object type, which is always `group.role`.
     pub object: String,
@@ -138,6 +149,7 @@ pub struct GroupRoleAssignment {
 
 /// Paginated list of role assignments for a group.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GroupRoleAssignmentListResource {
     /// The object type, which is always `list`.
     pub object: String,
@@ -151,6 +163,7 @@ pub struct GroupRoleAssignmentListResource {
 
 /// Request payload for assigning a role to a group.
 #[derive(Debug, Serialize, Deserialize, Builder, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "AssignGroupRoleRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option))]
@@ -163,6 +176,7 @@ pub struct PublicAssignOrganizationGroupRoleBody {
 
 /// Paginated list of user objects returned when inspecting group membership.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UserListResource {
     /// The object type, which is always `list`.
     pub object: String,

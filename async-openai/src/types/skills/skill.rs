@@ -4,6 +4,7 @@ use crate::types::InputSource;
 
 /// Reference a skill by ID when providing it to a tool or container.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillReferenceParam {
     /// The ID of the skill to reference.
     pub skill_id: String,
@@ -14,6 +15,7 @@ pub struct SkillReferenceParam {
 
 /// The source for an inline skill (base64-encoded zip archive).
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InlineSkillSourceParam {
     /// The media type. Always `"application/zip"`.
     pub media_type: String,
@@ -23,6 +25,7 @@ pub struct InlineSkillSourceParam {
 
 /// An inline skill definition provided directly in a request.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InlineSkillParam {
     /// The name of the skill.
     pub name: String,
@@ -34,6 +37,7 @@ pub struct InlineSkillParam {
 
 /// Represents a skill object.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillResource {
     /// Unique identifier for the skill.
     pub id: String,
@@ -53,6 +57,7 @@ pub struct SkillResource {
 
 /// List of skills.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillListResource {
     /// The object type, which is always `list`.
     pub object: String,
@@ -75,6 +80,7 @@ pub struct CreateSkillRequest {
 
 /// Request to update the default version pointer for a skill.
 #[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct SetDefaultSkillVersionRequest {
     /// The skill version number to set as default.
     pub default_version: String,
@@ -82,6 +88,7 @@ pub struct SetDefaultSkillVersionRequest {
 
 /// Confirmation of skill deletion.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeletedSkillResource {
     /// The object type, which is always `skill.deleted`.
     pub object: String,
@@ -93,6 +100,7 @@ pub struct DeletedSkillResource {
 
 /// Represents a skill version object.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillVersionResource {
     /// The object type, which is always `skill.version`.
     pub object: String,
@@ -112,6 +120,7 @@ pub struct SkillVersionResource {
 
 /// List of skill versions.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillVersionListResource {
     /// The object type, which is always `list`.
     pub object: String,
@@ -136,6 +145,7 @@ pub struct CreateSkillVersionRequest {
 
 /// Confirmation of skill version deletion.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeletedSkillVersionResource {
     /// The object type, which is always `skill.version.deleted`.
     pub object: String,

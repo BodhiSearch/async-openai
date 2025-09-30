@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing evals.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListEvalsOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListEvalsOrder {
 
 /// Order by field for listing evals.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ListEvalsOrderBy {
     /// Order by creation time
@@ -24,6 +26,7 @@ pub enum ListEvalsOrderBy {
 
 /// Query parameters for listing evals.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListEvalsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -46,6 +49,7 @@ pub struct ListEvalsQuery {
 
 /// Sort order for getting eval runs.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum GetEvalRunsOrder {
     /// Ascending order
@@ -56,6 +60,7 @@ pub enum GetEvalRunsOrder {
 
 /// Status filter for eval runs.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum GetEvalRunsStatus {
     /// Queued status
@@ -72,6 +77,7 @@ pub enum GetEvalRunsStatus {
 
 /// Query parameters for getting eval runs.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetEvalRunsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -94,6 +100,7 @@ pub struct GetEvalRunsQuery {
 
 /// Sort order for getting eval run output items.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum GetEvalRunOutputItemsOrder {
     /// Ascending order
@@ -104,6 +111,7 @@ pub enum GetEvalRunOutputItemsOrder {
 
 /// Status filter for eval run output items.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum GetEvalRunOutputItemsStatus {
     /// Failed status
@@ -114,6 +122,7 @@ pub enum GetEvalRunOutputItemsStatus {
 
 /// Query parameters for getting eval run output items.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "GetEvalRunOutputItemsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

@@ -12,6 +12,7 @@ use std::collections::HashMap;
 /// For models like `gpt-5.3-codex` and beyond, when sending follow-up requests, preserve and resend
 /// phase on all assistant messages — dropping it can degrade performance.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum MessagePhase {
     Commentary,
@@ -20,6 +21,7 @@ pub enum MessagePhase {
 
 /// Whether tool search was executed by the server or by the client.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ToolSearchExecutionType {
     Server,
@@ -28,6 +30,7 @@ pub enum ToolSearchExecutionType {
 
 /// The type of content to search for.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum SearchContentType {
     Text,
@@ -36,6 +39,7 @@ pub enum SearchContentType {
 
 /// The status of a function call.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum FunctionCallStatus {
     InProgress,
@@ -45,6 +49,7 @@ pub enum FunctionCallStatus {
 
 /// The status of a function call output.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum FunctionCallOutputStatusEnum {
     InProgress,
@@ -55,10 +60,12 @@ pub enum FunctionCallOutputStatusEnum {
 /// A tool that controls a virtual computer. Learn more about the
 /// [computer tool](https://platform.openai.com/docs/guides/tools-computer-use).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ComputerTool {}
 
 /// Groups function/custom tools under a shared namespace.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Builder, Default)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "NamespaceToolParamArgs",
     pattern = "mutable",
@@ -77,6 +84,7 @@ pub struct NamespaceToolParam {
 
 /// A function or custom tool that belongs to a namespace.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum NamespaceToolParamTool {
     Function(FunctionToolParam),
@@ -85,6 +93,7 @@ pub enum NamespaceToolParamTool {
 
 /// A function tool that can be used within a namespace or with tool search.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "FunctionToolParamArgs",
     pattern = "mutable",
@@ -100,6 +109,7 @@ pub struct FunctionToolParam {
     pub description: Option<String>,
     /// A JSON schema object describing the parameters of the function.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[schema(value_type = Option<Object>)]
     pub parameters: Option<serde_json::Value>,
     /// Whether to enforce strict parameter validation.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -111,6 +121,7 @@ pub struct FunctionToolParam {
 
 /// Hosted or BYOT tool search configuration for deferred tools.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "ToolSearchToolParamArgs",
     pattern = "mutable",
@@ -127,11 +138,13 @@ pub struct ToolSearchToolParam {
     pub description: Option<String>,
     /// Parameter schema for a client-executed tool search tool.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[schema(value_type = Option<Object>)]
     pub parameters: Option<serde_json::Value>,
 }
 
 /// A tool search call output item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolSearchCall {
     /// The unique ID of the tool search call item.
     pub id: String,
@@ -140,6 +153,7 @@ pub struct ToolSearchCall {
     /// Whether tool search was executed by the server or by the client.
     pub execution: ToolSearchExecutionType,
     /// Arguments used for the tool search call.
+    #[schema(value_type = Object)]
     pub arguments: serde_json::Value,
     /// The status of the tool search call item.
     pub status: FunctionCallStatus,
@@ -150,6 +164,7 @@ pub struct ToolSearchCall {
 
 /// A tool search call input item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolSearchCallItemParam {
     /// The unique ID of this tool search call.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -162,6 +177,7 @@ pub struct ToolSearchCallItemParam {
     pub execution: Option<ToolSearchExecutionType>,
     /// The arguments supplied to the tool search call.
     #[serde(default)]
+    #[schema(value_type = Object)]
     pub arguments: serde_json::Value,
     /// The status of the tool search call.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -170,6 +186,7 @@ pub struct ToolSearchCallItemParam {
 
 /// A tool search output item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolSearchOutput {
     /// The unique ID of the tool search output item.
     pub id: String,
@@ -188,6 +205,7 @@ pub struct ToolSearchOutput {
 
 /// A tool search output input item.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolSearchOutputItemParam {
     /// The unique ID of this tool search output.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -207,6 +225,7 @@ pub struct ToolSearchOutputItemParam {
 
 /// Role of messages in the API.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Role {
     #[default]
@@ -218,6 +237,7 @@ pub enum Role {
 
 /// Status of input/output items.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum OutputStatus {
     InProgress,
@@ -226,6 +246,7 @@ pub enum OutputStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum InputParam {
     ///  A text input to the model, equivalent to a text input with the
@@ -244,6 +265,7 @@ pub enum InputParam {
 /// # OpenAPI Specification
 /// Corresponds to the `Item` schema in the OpenAPI spec with a `type` discriminator.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Item {
     /// A message (type: "message").
@@ -350,6 +372,7 @@ pub enum Item {
 /// # OpenAPI Specification
 /// Corresponds to the `InputItem` schema: `anyOf[EasyInputMessage, Item, ItemReferenceParam]`
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum InputItem {
     /// A reference to an existing item by ID.
@@ -384,6 +407,7 @@ pub enum InputItem {
 /// Note: EasyInputMessage is NOT included here - it's a separate variant in `InputItem`,
 /// not part of the structured `Item` enum.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum MessageItem {
     /// An output message from the model (role: assistant, has required id & status).
@@ -401,6 +425,7 @@ pub enum MessageItem {
 
 /// A reference to an existing item by ID.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ItemReference {
     /// The type of item to reference. Can be "item_reference" or null.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -410,6 +435,7 @@ pub struct ItemReference {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemReferenceType {
     ItemReference,
@@ -417,6 +443,7 @@ pub enum ItemReferenceType {
 
 /// Output from a function call that you're providing back to the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionCallOutputItemParam {
     /// The unique ID of the function tool call generated by the model.
     pub call_id: String,
@@ -433,6 +460,7 @@ pub struct FunctionCallOutputItemParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum FunctionCallOutput {
     /// A JSON string of the output of the function tool call.
@@ -441,6 +469,7 @@ pub enum FunctionCallOutput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ComputerCallOutputItemParam {
     /// The ID of the computer tool call that produced the output.
     pub call_id: String,
@@ -459,6 +488,7 @@ pub struct ComputerCallOutputItemParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ComputerScreenshotImageType {
     ComputerScreenshot,
@@ -466,6 +496,7 @@ pub enum ComputerScreenshotImageType {
 
 /// A computer screenshot image used with the computer use tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ComputerScreenshotImage {
     /// Specifies the event type. For a computer screenshot, this property is always
     /// set to `computer_screenshot`.
@@ -480,6 +511,7 @@ pub struct ComputerScreenshotImage {
 
 /// Output from a local shell tool call that you're providing back to the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalShellToolCallOutput {
     /// The unique ID of the local shell tool call generated by the model.
     pub id: String,
@@ -494,6 +526,7 @@ pub struct LocalShellToolCallOutput {
 
 /// Output from a local shell command execution.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalShellOutput {
     /// The stdout output from the command.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -510,6 +543,7 @@ pub struct LocalShellOutput {
 
 /// An MCP approval response that you're providing back to the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPApprovalResponse {
     /// The ID of the approval request being answered.
     pub approval_request_id: String,
@@ -527,6 +561,7 @@ pub struct MCPApprovalResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum CustomToolCallOutputOutput {
     /// A string of the output of the custom tool call.
@@ -536,6 +571,7 @@ pub enum CustomToolCallOutputOutput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CustomToolCallOutput {
     /// The call ID, used to map this custom tool call output to a custom tool call.
     pub call_id: String,
@@ -555,6 +591,7 @@ pub struct CustomToolCallOutput {
 /// string content and structured content. Role can include `assistant` for providing
 /// previous assistant responses.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "EasyInputMessageArgs",
     pattern = "mutable",
@@ -582,6 +619,7 @@ pub struct EasyInputMessage {
 /// This variant requires structured content (not a simple string) and does not support
 /// the `assistant` role (use OutputMessage for that). status is populated when items are returned via API.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "InputMessageArgs",
     pattern = "mutable",
@@ -606,6 +644,7 @@ pub struct InputMessage {
 /// The role for an input message - can only be `user`, `system`, or `developer`.
 /// This type ensures type safety by excluding the `assistant` role (use OutputMessage for that).
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum InputRole {
     #[default]
@@ -616,6 +655,7 @@ pub enum InputRole {
 
 /// Content for EasyInputMessage - can be a simple string or structured list.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum EasyInputContent {
     /// A text input to the model.
@@ -626,6 +666,7 @@ pub enum EasyInputContent {
 
 /// Parts of a message: text, image, file, or audio.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum InputContent {
     /// A text input to the model.
@@ -638,12 +679,14 @@ pub enum InputContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InputTextContent {
     /// The text input to the model.
     pub text: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "InputImageArgs",
     pattern = "mutable",
@@ -665,6 +708,7 @@ pub struct InputImageContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "InputFileArgs",
     pattern = "mutable",
@@ -690,12 +734,14 @@ pub struct InputFileContent {
 /// The conversation that this response belonged to. Input items and output items from this
 /// response were automatically added to this conversation.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Conversation {
     /// The unique ID of the conversation that this response was associated with.
     pub id: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum ConversationParam {
     /// The unique ID of the conversation.
@@ -705,6 +751,7 @@ pub enum ConversationParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+#[derive(utoipa::ToSchema)]
 pub enum IncludeEnum {
     #[serde(rename = "file_search_call.results")]
     FileSearchCallResults,
@@ -725,6 +772,7 @@ pub enum IncludeEnum {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseStreamOptions {
     /// When true, stream obfuscation will be enabled. Stream obfuscation adds
     /// random characters to an `obfuscation` field on streaming delta events to
@@ -739,6 +787,7 @@ pub struct ResponseStreamOptions {
 
 /// Builder for a Responses API request.
 #[derive(Clone, Serialize, Deserialize, Debug, Default, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "CreateResponseArgs",
     pattern = "mutable",
@@ -958,14 +1007,17 @@ pub struct CreateResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum ResponsePromptVariables {
     String(String),
     Content(InputContent),
+    #[schema(value_type = Object)]
     Custom(serde_json::Value),
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Prompt {
     /// The unique identifier of the prompt template to use.
     pub id: String,
@@ -982,6 +1034,7 @@ pub struct Prompt {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ServiceTier {
     #[default]
@@ -994,6 +1047,7 @@ pub enum ServiceTier {
 
 /// Truncation strategies.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Truncation {
     Auto,
@@ -1001,12 +1055,14 @@ pub enum Truncation {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Billing {
     pub payer: String,
 }
 
 /// o-series reasoning settings.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "ReasoningArgs",
     pattern = "mutable",
@@ -1036,6 +1092,7 @@ pub struct Reasoning {
 
 /// o-series reasoning settings.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Verbosity {
     Low,
@@ -1044,6 +1101,7 @@ pub enum Verbosity {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ReasoningSummary {
     Auto,
@@ -1053,6 +1111,7 @@ pub enum ReasoningSummary {
 
 /// The retention policy for the prompt cache.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum PromptCacheRetention {
     #[serde(rename = "in_memory")]
     InMemory,
@@ -1062,6 +1121,7 @@ pub enum PromptCacheRetention {
 
 /// Configuration for text response format.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseTextParam {
     /// An object specifying the format that the model must output.
     ///
@@ -1087,6 +1147,7 @@ pub struct ResponseTextParam {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum TextResponseFormatConfiguration {
     /// Default response format. Used to generate text responses.
@@ -1103,6 +1164,7 @@ pub enum TextResponseFormatConfiguration {
 
 /// Definitions for model-callable tools.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Tool {
     /// Defines a function in your own code the model can choose to call. Learn more about [function
@@ -1152,6 +1214,7 @@ pub enum Tool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 pub struct CustomToolParam {
     /// The name of the custom tool, used to identify it in tool calls.
     pub name: String,
@@ -1165,6 +1228,7 @@ pub struct CustomToolParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum CustomToolParamFormat {
     /// Unconstrained free-form text.
@@ -1175,6 +1239,7 @@ pub enum CustomToolParamFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "FileSearchToolArgs",
     pattern = "mutable",
@@ -1197,6 +1262,7 @@ pub struct FileSearchTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "FunctionToolArgs",
     pattern = "mutable",
@@ -1208,6 +1274,7 @@ pub struct FunctionTool {
     pub name: String,
     /// A JSON schema object describing the parameters of the function.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[schema(value_type = Option<Object>)]
     pub parameters: Option<serde_json::Value>,
     /// Whether to enforce strict parameter validation. Default `true`.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1222,6 +1289,7 @@ pub struct FunctionTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchToolFilters {
     /// Allowed domains for the search. If not provided, all domains are allowed.
     /// Subdomains of the provided domains are allowed as well.
@@ -1232,6 +1300,7 @@ pub struct WebSearchToolFilters {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "WebSearchToolArgs",
     pattern = "mutable",
@@ -1255,6 +1324,7 @@ pub struct WebSearchTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum WebSearchToolSearchContextSize {
     Low,
@@ -1264,6 +1334,7 @@ pub enum WebSearchToolSearchContextSize {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ComputerEnvironment {
     Windows,
@@ -1275,6 +1346,7 @@ pub enum ComputerEnvironment {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "ComputerUsePreviewToolArgs",
     pattern = "mutable",
@@ -1291,6 +1363,7 @@ pub struct ComputerUsePreviewTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum RankVersionType {
     #[serde(rename = "auto")]
     Auto,
@@ -1299,6 +1372,7 @@ pub enum RankVersionType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct HybridSearch {
     /// The weight of the embedding in the reciprocal ranking fusion.
     pub embedding_weight: f32,
@@ -1308,6 +1382,7 @@ pub struct HybridSearch {
 
 /// Options for search result ranking.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RankingOptions {
     /// Weights that control how reciprocal rank fusion balances semantic embedding matches versus
     /// sparse keyword matches when hybrid search is enabled.
@@ -1322,6 +1397,7 @@ pub struct RankingOptions {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum WebSearchApproximateLocationType {
     #[default]
@@ -1330,6 +1406,7 @@ pub enum WebSearchApproximateLocationType {
 
 /// Approximate user location for web search.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "WebSearchApproximateLocationArgs",
     pattern = "mutable",
@@ -1359,6 +1436,7 @@ pub struct WebSearchApproximateLocation {
 
 /// Container configuration for a code interpreter.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CodeInterpreterToolContainer {
     /// Configuration for a code interpreter container. Optionally specify the IDs of the
@@ -1372,6 +1450,7 @@ pub enum CodeInterpreterToolContainer {
 
 /// Auto configuration for code interpreter container.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreterContainerAuto {
     /// An optional list of uploaded files to make available to your code.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1382,6 +1461,7 @@ pub struct CodeInterpreterContainerAuto {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "CodeInterpreterToolArgs",
     pattern = "mutable",
@@ -1397,6 +1477,7 @@ pub struct CodeInterpreterTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ImageGenToolInputImageMask {
     /// Base64-encoded mask image.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1407,6 +1488,7 @@ pub struct ImageGenToolInputImageMask {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum InputFidelity {
     #[default]
@@ -1415,6 +1497,7 @@ pub enum InputFidelity {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenToolModeration {
     #[default]
@@ -1424,6 +1507,7 @@ pub enum ImageGenToolModeration {
 
 /// Whether to generate a new image or edit an existing image.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenActionEnum {
     /// Generate a new image.
@@ -1437,6 +1521,7 @@ pub enum ImageGenActionEnum {
 
 /// Image generation tool definition.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "ImageGenerationArgs",
     pattern = "mutable",
@@ -1488,6 +1573,7 @@ pub struct ImageGenTool {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenToolBackground {
     Transparent,
@@ -1497,6 +1583,7 @@ pub enum ImageGenToolBackground {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenToolOutputFormat {
     #[default]
@@ -1506,6 +1593,7 @@ pub enum ImageGenToolOutputFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenToolQuality {
     Low,
@@ -1516,6 +1604,7 @@ pub enum ImageGenToolQuality {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ImageGenToolSize {
     #[default]
@@ -1529,6 +1618,7 @@ pub enum ImageGenToolSize {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ToolChoiceAllowedMode {
     Auto,
@@ -1536,6 +1626,7 @@ pub enum ToolChoiceAllowedMode {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolChoiceAllowed {
     /// Constrains the tools available to the model to a pre-defined set.
     ///
@@ -1554,12 +1645,14 @@ pub struct ToolChoiceAllowed {
     ///   { "type": "image_generation" }
     /// ]
     /// ```
+    #[schema(value_type = Vec<Object>)]
     pub tools: Vec<serde_json::Value>,
 }
 
 /// The type of hosted tool the model should to use. Learn more about
 /// [built-in tools](https://platform.openai.com/docs/guides/tools).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ToolChoiceTypes {
     FileSearch,
@@ -1574,12 +1667,14 @@ pub enum ToolChoiceTypes {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolChoiceFunction {
     /// The name of the function to call.
     pub name: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolChoiceMCP {
     /// The name of the tool to call on the server.
     pub name: String,
@@ -1588,12 +1683,14 @@ pub struct ToolChoiceMCP {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ToolChoiceCustom {
     /// The name of the custom tool to call.
     pub name: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ToolChoiceParam {
     /// Constrains the tools available to the model to a pre-defined set.
@@ -1632,6 +1729,7 @@ pub enum ToolChoiceParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ToolChoiceOptions {
     None,
@@ -1641,6 +1739,7 @@ pub enum ToolChoiceOptions {
 
 /// An error that occurred while generating the response.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ErrorObject {
     /// A machine-readable error code that was returned.
     pub code: String,
@@ -1650,12 +1749,14 @@ pub struct ErrorObject {
 
 /// Details about an incomplete response.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct IncompleteDetails {
     /// The reason why the response is incomplete.
     pub reason: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TopLogProb {
     pub bytes: Vec<u8>,
     pub logprob: f64,
@@ -1663,6 +1764,7 @@ pub struct TopLogProb {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LogProb {
     pub bytes: Vec<u8>,
     pub logprob: f64,
@@ -1671,6 +1773,7 @@ pub struct LogProb {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseTopLobProb {
     /// The log probability of this token.
     pub logprob: f64,
@@ -1679,6 +1782,7 @@ pub struct ResponseTopLobProb {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseLogProb {
     /// The log probability of this token.
     pub logprob: f64,
@@ -1690,6 +1794,7 @@ pub struct ResponseLogProb {
 
 /// A simple text output from the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct OutputTextContent {
     /// The annotations of the text output.
     pub annotations: Vec<Annotation>,
@@ -1700,6 +1805,7 @@ pub struct OutputTextContent {
 
 /// An annotation that applies to a span of output text.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Annotation {
     /// A citation to a file.
@@ -1713,6 +1819,7 @@ pub enum Annotation {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileCitationBody {
     /// The ID of the file.
     file_id: String,
@@ -1723,6 +1830,7 @@ pub struct FileCitationBody {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct UrlCitationBody {
     /// The index of the last character of the URL citation in the message.
     end_index: u32,
@@ -1735,6 +1843,7 @@ pub struct UrlCitationBody {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerFileCitationBody {
     /// The ID of the container file.
     container_id: String,
@@ -1749,6 +1858,7 @@ pub struct ContainerFileCitationBody {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FilePath {
     /// The ID of the file.
     file_id: String,
@@ -1758,6 +1868,7 @@ pub struct FilePath {
 
 /// A refusal explanation from the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct RefusalContent {
     /// The refusal explanation from the model.
     pub refusal: String,
@@ -1765,6 +1876,7 @@ pub struct RefusalContent {
 
 /// A message generated by the model.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct OutputMessage {
     /// The content of the output message.
     pub content: Vec<OutputMessageContent>,
@@ -1784,6 +1896,7 @@ pub struct OutputMessage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum MessageType {
     #[default]
@@ -1793,6 +1906,7 @@ pub enum MessageType {
 /// The role for an output message - always `assistant`.
 /// This type ensures type safety by only allowing the assistant role.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum AssistantRole {
     #[default]
@@ -1800,6 +1914,7 @@ pub enum AssistantRole {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum OutputMessageContent {
     /// A text output from the model.
@@ -1809,6 +1924,7 @@ pub enum OutputMessageContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum OutputContent {
     /// A text output from the model.
@@ -1820,6 +1936,7 @@ pub enum OutputContent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ReasoningTextContent {
     /// The reasoning text from the model.
     pub text: String,
@@ -1827,6 +1944,7 @@ pub struct ReasoningTextContent {
 
 /// A reasoning item representing the model's chain of thought, including summary paragraphs.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ReasoningItem {
     /// Unique identifier of the reasoning content.
     pub id: String,
@@ -1846,6 +1964,7 @@ pub struct ReasoningItem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum SummaryPart {
     SummaryText(SummaryTextContent),
@@ -1853,6 +1972,7 @@ pub enum SummaryPart {
 
 /// File search tool call output.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileSearchToolCall {
     /// The unique ID of the file search tool call.
     pub id: String,
@@ -1867,6 +1987,7 @@ pub struct FileSearchToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum FileSearchToolCallStatus {
     InProgress,
@@ -1878,11 +1999,13 @@ pub enum FileSearchToolCallStatus {
 
 /// A single result from a file search.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileSearchToolCallResult {
     /// Set of 16 key-value pairs that can be attached to an object. This can be useful for storing
     /// additional information about the object in a structured format, and querying for objects
     /// API or the dashboard. Keys are strings with a maximum length of 64 characters
     /// . Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    #[schema(value_type = Object)]
     pub attributes: HashMap<String, serde_json::Value>,
     /// The unique ID of the file.
     pub file_id: String,
@@ -1895,6 +2018,7 @@ pub struct FileSearchToolCallResult {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ComputerCallSafetyCheckParam {
     /// The ID of the pending safety check.
     pub id: String,
@@ -1907,6 +2031,7 @@ pub struct ComputerCallSafetyCheckParam {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum WebSearchToolCallStatus {
     InProgress,
@@ -1916,6 +2041,7 @@ pub enum WebSearchToolCallStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchActionSearchSource {
     /// The type of source. Always `url`.
     pub r#type: String,
@@ -1924,6 +2050,7 @@ pub struct WebSearchActionSearchSource {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchActionSearch {
     /// The search query.
     pub query: String,
@@ -1932,12 +2059,14 @@ pub struct WebSearchActionSearch {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchActionOpenPage {
     /// The URL opened by the model.
     pub url: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchActionFind {
     /// The URL of the page searched for the pattern.
     pub url: String,
@@ -1946,6 +2075,7 @@ pub struct WebSearchActionFind {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum WebSearchToolCallAction {
     /// Action type "search" - Performs a web search query.
@@ -1960,6 +2090,7 @@ pub enum WebSearchToolCallAction {
 
 /// Web search tool call output.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct WebSearchToolCall {
     /// An object describing the specific action taken in this web search call. Includes
     /// details on how the model used the web (search, open_page, find, find_in_page).
@@ -1972,6 +2103,7 @@ pub struct WebSearchToolCall {
 
 /// Output from a computer tool call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ComputerToolCall {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub action: Option<ComputerAction>,
@@ -1992,6 +2124,7 @@ pub struct ComputerToolCall {
 
 /// An x/y coordinate pair.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CoordParam {
     /// The x-coordinate.
     pub x: i32,
@@ -2001,6 +2134,7 @@ pub struct CoordParam {
 
 /// Represents all user‐triggered actions.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ComputerAction {
     /// A click action.
@@ -2032,6 +2166,7 @@ pub enum ComputerAction {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ClickButtonType {
     Left,
@@ -2043,6 +2178,7 @@ pub enum ClickButtonType {
 
 /// A click action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ClickParam {
     /// Indicates which mouse button was pressed during the click. One of `left`,
     /// `right`, `wheel`, `back`, or `forward`.
@@ -2055,6 +2191,7 @@ pub struct ClickParam {
 
 /// A double click action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DoubleClickAction {
     /// The x-coordinate where the double click occurred.
     pub x: i32,
@@ -2064,6 +2201,7 @@ pub struct DoubleClickAction {
 
 /// A drag action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DragParam {
     /// An array of coordinates representing the path of the drag action.
     pub path: Vec<CoordParam>,
@@ -2071,6 +2209,7 @@ pub struct DragParam {
 
 /// A keypress action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct KeyPressAction {
     /// The combination of keys the model is requesting to be pressed.
     /// This is an array of strings, each representing a key.
@@ -2079,6 +2218,7 @@ pub struct KeyPressAction {
 
 /// A mouse move action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct MoveParam {
     /// The x-coordinate to move to.
     pub x: i32,
@@ -2088,6 +2228,7 @@ pub struct MoveParam {
 
 /// A scroll action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ScrollParam {
     /// The horizontal scroll distance.
     pub scroll_x: i32,
@@ -2101,12 +2242,14 @@ pub struct ScrollParam {
 
 /// A typing (text entry) action.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct TypeParam {
     /// The text to type.
     pub text: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionToolCall {
     /// A JSON string of the arguments to pass to the function.
     pub arguments: String,
@@ -2127,6 +2270,7 @@ pub struct FunctionToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ImageGenToolCallStatus {
     InProgress,
@@ -2136,6 +2280,7 @@ pub enum ImageGenToolCallStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ImageGenToolCall {
     /// The unique ID of the image generation call.
     pub id: String,
@@ -2146,6 +2291,7 @@ pub struct ImageGenToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum CodeInterpreterToolCallStatus {
     InProgress,
@@ -2157,6 +2303,7 @@ pub enum CodeInterpreterToolCallStatus {
 
 /// Output of a code interpreter request.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreterToolCall {
     /// The code to run, or null if not available.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2176,6 +2323,7 @@ pub struct CodeInterpreterToolCall {
 
 /// Individual result from a code interpreter: either logs or files.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CodeInterpreterToolCallOutput {
     /// Code interpreter output logs
@@ -2185,18 +2333,21 @@ pub enum CodeInterpreterToolCallOutput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreterOutputLogs {
     /// The logs output from the code interpreter.
     pub logs: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreterOutputImage {
     /// The URL of the image output from the code interpreter.
     pub url: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CodeInterpreterFile {
     /// The ID of the file.
     file_id: String,
@@ -2205,6 +2356,7 @@ pub struct CodeInterpreterFile {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalShellToolCall {
     /// Execute a shell command on the server.
     pub action: LocalShellExecAction,
@@ -2218,6 +2370,7 @@ pub struct LocalShellToolCall {
 
 /// Define the shape of a local shell action (exec).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalShellExecAction {
     /// The command to run.
     pub command: Vec<String>,
@@ -2233,6 +2386,7 @@ pub struct LocalShellExecAction {
 
 /// Commands and limits describing how to run the shell tool call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellActionParam {
     /// Ordered shell commands for the execution environment to run.
     pub commands: Vec<String>,
@@ -2246,6 +2400,7 @@ pub struct FunctionShellActionParam {
 
 /// Status values reported for shell tool calls.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum FunctionShellCallItemStatus {
     InProgress,
@@ -2255,6 +2410,7 @@ pub enum FunctionShellCallItemStatus {
 
 /// The environment for a shell call item (request side).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FunctionShellCallItemEnvironment {
     /// Use a local computer environment.
@@ -2265,6 +2421,7 @@ pub enum FunctionShellCallItemEnvironment {
 
 /// A tool representing a request to execute one or more shell commands.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallItemParam {
     /// The unique ID of the shell tool call. Populated when this item is returned via API.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2283,6 +2440,7 @@ pub struct FunctionShellCallItemParam {
 
 /// Indicates that the shell commands finished and returned an exit code.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutputExitOutcomeParam {
     /// The exit code returned by the shell process.
     pub exit_code: i32,
@@ -2290,6 +2448,7 @@ pub struct FunctionShellCallOutputExitOutcomeParam {
 
 /// The exit or timeout outcome associated with this chunk.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FunctionShellCallOutputOutcomeParam {
     Timeout,
@@ -2298,6 +2457,7 @@ pub enum FunctionShellCallOutputOutcomeParam {
 
 /// Captured stdout and stderr for a portion of a shell tool call output.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutputContentParam {
     /// Captured stdout output for this chunk of the shell call.
     pub stdout: String,
@@ -2309,6 +2469,7 @@ pub struct FunctionShellCallOutputContentParam {
 
 /// The streamed output items emitted by a shell tool call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutputItemParam {
     /// The unique ID of the shell tool call output. Populated when this item is returned via API.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2324,6 +2485,7 @@ pub struct FunctionShellCallOutputItemParam {
 
 /// Status values reported for apply_patch tool calls.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplyPatchCallStatusParam {
     InProgress,
@@ -2332,6 +2494,7 @@ pub enum ApplyPatchCallStatusParam {
 
 /// Instruction for creating a new file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchCreateFileOperationParam {
     /// Path of the file to create relative to the workspace root.
     pub path: String,
@@ -2341,6 +2504,7 @@ pub struct ApplyPatchCreateFileOperationParam {
 
 /// Instruction for deleting an existing file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchDeleteFileOperationParam {
     /// Path of the file to delete relative to the workspace root.
     pub path: String,
@@ -2348,6 +2512,7 @@ pub struct ApplyPatchDeleteFileOperationParam {
 
 /// Instruction for updating an existing file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchUpdateFileOperationParam {
     /// Path of the file to update relative to the workspace root.
     pub path: String,
@@ -2357,6 +2522,7 @@ pub struct ApplyPatchUpdateFileOperationParam {
 
 /// One of the create_file, delete_file, or update_file operations supplied to the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ApplyPatchOperationParam {
     CreateFile(ApplyPatchCreateFileOperationParam),
@@ -2366,6 +2532,7 @@ pub enum ApplyPatchOperationParam {
 
 /// A tool call representing a request to create, delete, or update files using diff patches.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchToolCallItemParam {
     /// The unique ID of the apply patch tool call. Populated when this item is returned via API.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2380,6 +2547,7 @@ pub struct ApplyPatchToolCallItemParam {
 
 /// Outcome values reported for apply_patch tool call outputs.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplyPatchCallOutputStatusParam {
     Completed,
@@ -2388,6 +2556,7 @@ pub enum ApplyPatchCallOutputStatusParam {
 
 /// The streamed output emitted by an apply patch tool call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchToolCallOutputItemParam {
     /// The unique ID of the apply patch tool call output. Populated when this item is returned via API.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2404,6 +2573,7 @@ pub struct ApplyPatchToolCallOutputItemParam {
 /// Shell exec action
 /// Execute a shell command.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellAction {
     /// A list of commands to run.
     pub commands: Vec<String>,
@@ -2415,6 +2585,7 @@ pub struct FunctionShellAction {
 
 /// Status values reported for function shell tool calls.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum LocalShellCallStatus {
     InProgress,
@@ -2424,6 +2595,7 @@ pub enum LocalShellCallStatus {
 
 /// The environment for a shell call (response side).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FunctionShellCallEnvironment {
     /// A local computer environment.
@@ -2434,6 +2606,7 @@ pub enum FunctionShellCallEnvironment {
 
 /// A tool call that executes one or more shell commands in a managed environment.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCall {
     /// The unique ID of the function shell tool call. Populated when this item is returned via API.
     pub id: String,
@@ -2452,6 +2625,7 @@ pub struct FunctionShellCall {
 
 /// The content of a shell tool call output that was emitted.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutputContent {
     /// The standard output that was captured.
     pub stdout: String,
@@ -2467,6 +2641,7 @@ pub struct FunctionShellCallOutputContent {
 
 /// Function shell call outcome
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FunctionShellCallOutputOutcome {
     Timeout,
@@ -2475,6 +2650,7 @@ pub enum FunctionShellCallOutputOutcome {
 
 /// Indicates that the shell commands finished and returned an exit code.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutputExitOutcome {
     /// Exit code from the shell process.
     pub exit_code: i32,
@@ -2482,6 +2658,7 @@ pub struct FunctionShellCallOutputExitOutcome {
 
 /// The output of a shell tool call that was emitted.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellCallOutput {
     /// The unique ID of the shell call output. Populated when this item is returned via API.
     pub id: String,
@@ -2499,6 +2676,7 @@ pub struct FunctionShellCallOutput {
 
 /// Status values reported for apply_patch tool calls.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplyPatchCallStatus {
     InProgress,
@@ -2507,6 +2685,7 @@ pub enum ApplyPatchCallStatus {
 
 /// Instruction describing how to create a file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchCreateFileOperation {
     /// Path of the file to create.
     pub path: String,
@@ -2516,6 +2695,7 @@ pub struct ApplyPatchCreateFileOperation {
 
 /// Instruction describing how to delete a file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchDeleteFileOperation {
     /// Path of the file to delete.
     pub path: String,
@@ -2523,6 +2703,7 @@ pub struct ApplyPatchDeleteFileOperation {
 
 /// Instruction describing how to update a file via the apply_patch tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchUpdateFileOperation {
     /// Path of the file to update.
     pub path: String,
@@ -2532,6 +2713,7 @@ pub struct ApplyPatchUpdateFileOperation {
 
 /// One of the create_file, delete_file, or update_file operations applied via apply_patch.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ApplyPatchOperation {
     CreateFile(ApplyPatchCreateFileOperation),
@@ -2541,6 +2723,7 @@ pub enum ApplyPatchOperation {
 
 /// A tool call that applies file diffs by creating, deleting, or updating files.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchToolCall {
     /// The unique ID of the apply patch tool call. Populated when this item is returned via API.
     pub id: String,
@@ -2557,6 +2740,7 @@ pub struct ApplyPatchToolCall {
 
 /// Outcome values reported for apply_patch tool call outputs.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplyPatchCallOutputStatus {
     Completed,
@@ -2565,6 +2749,7 @@ pub enum ApplyPatchCallOutputStatus {
 
 /// The output emitted by an apply patch tool call.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ApplyPatchToolCallOutput {
     /// The unique ID of the apply patch tool call output. Populated when this item is returned via API.
     pub id: String,
@@ -2581,6 +2766,7 @@ pub struct ApplyPatchToolCallOutput {
 
 /// Output of an MCP server tool invocation.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPToolCall {
     /// A JSON string of the arguments passed to the tool.
     pub arguments: String,
@@ -2604,6 +2790,7 @@ pub struct MCPToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum MCPToolCallStatus {
     InProgress,
@@ -2614,6 +2801,7 @@ pub enum MCPToolCallStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPListTools {
     /// The unique ID of the list.
     pub id: String,
@@ -2627,6 +2815,7 @@ pub struct MCPListTools {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MCPApprovalRequest {
     /// JSON string of arguments for the tool.
     pub arguments: String,
@@ -2639,6 +2828,7 @@ pub struct MCPApprovalRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum Instructions {
     /// A text input to the model, equivalent to a text input with the `developer` role.
@@ -2649,6 +2839,7 @@ pub enum Instructions {
 
 /// The complete response returned by the Responses API.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct Response {
     /// Whether to run the model response in the background.
     /// [Learn more](https://platform.openai.com/docs/guides/background).
@@ -2851,6 +3042,7 @@ pub struct Response {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum Status {
     Completed,
@@ -2863,6 +3055,7 @@ pub enum Status {
 
 /// Output item
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum OutputItem {
@@ -2920,6 +3113,7 @@ pub enum OutputItem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[non_exhaustive]
 pub struct CustomToolCall {
     /// An identifier used to map this custom tool call to a tool call output.
@@ -2936,6 +3130,7 @@ pub struct CustomToolCall {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteResponse {
     pub object: String,
     pub deleted: bool,
@@ -2943,12 +3138,14 @@ pub struct DeleteResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct AnyItemReference {
     pub r#type: Option<String>,
     pub id: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ItemResourceItem {
     Message(MessageItem),
@@ -2975,6 +3172,7 @@ pub enum ItemResourceItem {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum ItemResource {
     ItemReference(AnyItemReference),
@@ -2983,6 +3181,7 @@ pub enum ItemResource {
 
 /// A list of Response items.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ResponseItemList {
     /// The type of object returned, must be `list`.
     pub object: String,
@@ -2997,6 +3196,7 @@ pub struct ResponseItemList {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(
     name = "TokenCountsBodyArgs",
     pattern = "mutable",
@@ -3075,6 +3275,7 @@ pub struct TokenCountsBody {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TokenCountsResource {
     pub object: String,
     pub input_tokens: u32,
@@ -3082,6 +3283,7 @@ pub struct TokenCountsResource {
 
 /// A compaction item generated by the `/v1/responses/compact` API.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CompactionSummaryItemParam {
     /// The ID of the compaction item.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3092,6 +3294,7 @@ pub struct CompactionSummaryItemParam {
 
 /// A compaction item generated by the `/v1/responses/compact` API.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CompactionBody {
     /// The unique ID of the compaction item.
     pub id: String,
@@ -3104,6 +3307,7 @@ pub struct CompactionBody {
 
 /// Request to compact a conversation.
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CompactResponseRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -3140,6 +3344,7 @@ pub struct CompactResponseRequest {
 
 /// The compacted response object.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CompactResource {
     /// The unique identifier for the compacted response.
     pub id: String,
@@ -3160,6 +3365,7 @@ pub struct CompactResource {
 
 /// A domain-scoped secret injected for allowlisted domains.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerNetworkPolicyDomainSecretParam {
     /// The domain associated with the secret.
     pub domain: String,
@@ -3171,6 +3377,7 @@ pub struct ContainerNetworkPolicyDomainSecretParam {
 
 /// Details for an allowlist network policy.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerNetworkPolicyAllowlistDetails {
     /// A list of allowed domains.
     pub allowed_domains: Vec<String>,
@@ -3181,6 +3388,7 @@ pub struct ContainerNetworkPolicyAllowlistDetails {
 
 /// Network access policy for a container.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ContainerNetworkPolicy {
     /// Disable all outbound network access.
@@ -3191,6 +3399,7 @@ pub enum ContainerNetworkPolicy {
 
 /// A skill referenced by ID.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct SkillReferenceParam {
     /// The ID of the skill to reference.
     pub skill_id: String,
@@ -3201,6 +3410,7 @@ pub struct SkillReferenceParam {
 
 /// An inline skill source (base64-encoded zip).
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InlineSkillSourceParam {
     /// The media type. Always `"application/zip"`.
     pub media_type: String,
@@ -3210,6 +3420,7 @@ pub struct InlineSkillSourceParam {
 
 /// An inline skill definition.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct InlineSkillParam {
     /// The name of the skill.
     pub name: String,
@@ -3221,6 +3432,7 @@ pub struct InlineSkillParam {
 
 /// A skill parameter — either a reference or inline definition.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum SkillParam {
     /// Reference a skill by ID.
@@ -3231,6 +3443,7 @@ pub enum SkillParam {
 
 /// Automatically creates a container for the request.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerAutoParam {
     /// An optional list of uploaded file IDs to make available in the container.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3245,6 +3458,7 @@ pub struct ContainerAutoParam {
 
 /// A local skill available in a local environment.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalSkillParam {
     /// The name of the skill.
     pub name: String,
@@ -3256,6 +3470,7 @@ pub struct LocalSkillParam {
 
 /// Uses a local computer environment.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct LocalEnvironmentParam {
     /// An optional list of local skills.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3264,6 +3479,7 @@ pub struct LocalEnvironmentParam {
 
 /// References a container created with the /v1/containers endpoint.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerReferenceParam {
     /// The ID of the referenced container.
     pub container_id: String,
@@ -3271,6 +3487,7 @@ pub struct ContainerReferenceParam {
 
 /// A resource reference to a container by ID.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContainerReferenceResource {
     /// The ID of the referenced container.
     pub container_id: String,
@@ -3278,6 +3495,7 @@ pub struct ContainerReferenceResource {
 
 /// The execution environment for a shell tool — container or local.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum FunctionShellEnvironment {
     /// Automatically creates a container for this request.
@@ -3290,6 +3508,7 @@ pub enum FunctionShellEnvironment {
 
 /// Parameters for the shell function tool.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct FunctionShellToolParam {
     /// The execution environment for the shell tool.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -3298,6 +3517,7 @@ pub struct FunctionShellToolParam {
 
 /// Context management configuration.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ContextManagementParam {
     /// The context management strategy type.
     #[serde(rename = "type")]

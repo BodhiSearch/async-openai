@@ -6,6 +6,7 @@ use crate::types::videos::ImageInput;
 use crate::types::InputSource;
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum VideoSize {
     #[default]
     #[serde(rename = "720x1280")]
@@ -19,6 +20,7 @@ pub enum VideoSize {
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub enum VideoSeconds {
     #[default]
     #[serde(rename = "4")]
@@ -37,6 +39,7 @@ pub enum VideoSeconds {
 
 /// Reference to a completed video by its ID.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoReferenceInputParam {
     /// The identifier of the completed video.
     pub id: String,
@@ -44,6 +47,7 @@ pub struct VideoReferenceInputParam {
 
 /// Image reference parameter for video generation.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct ImageRefParam {
     /// A fully qualified URL or base64-encoded data URL.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -93,6 +97,7 @@ pub struct CreateVideoCharacterRequest {
 
 /// Parameters for editing an existing generated video.
 #[derive(Clone, Default, Debug, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateVideoEditRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -122,6 +127,7 @@ impl Default for VideoEditInput {
 
 /// Parameters for extending a completed video.
 #[derive(Clone, Default, Debug, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateVideoExtendRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -137,6 +143,7 @@ pub struct CreateVideoExtendRequest {
 }
 
 #[derive(Clone, Default, Debug, Builder, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "RemixVideoRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -147,6 +154,7 @@ pub struct RemixVideoRequest {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoResourceError {
     pub code: String,
     pub message: String,
@@ -154,6 +162,7 @@ pub struct VideoResourceError {
 
 /// Structured information describing a generated video job.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoResource {
     /// Unix timestamp (seconds) for when the job completed, if finished.
     pub completed_at: Option<u64>,
@@ -194,6 +203,7 @@ pub struct VideoResource {
 
 /// Character resource returned by character creation and retrieval.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoCharacterResource {
     /// Identifier for the character.
     pub id: Option<String>,
@@ -204,6 +214,7 @@ pub struct VideoCharacterResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VideoStatus {
     Queued,
@@ -213,6 +224,7 @@ pub enum VideoStatus {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct DeletedVideoResource {
     pub id: String,
     pub object: String,
@@ -220,6 +232,7 @@ pub struct DeletedVideoResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 pub struct VideoListResource {
     pub data: Vec<VideoResource>,
     pub object: String,
@@ -229,6 +242,7 @@ pub struct VideoListResource {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum VideoVariant {
     #[default]

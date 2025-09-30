@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::types::audio::{LogProbProperties, TranscriptTextUsageTokens};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum CreateSpeechResponseStreamEvent {
     /// Emitted for each chunk of audio data generated during speech synthesis.
@@ -14,12 +15,14 @@ pub enum CreateSpeechResponseStreamEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SpeechAudioDeltaEvent {
     /// A chunk of Base64-encoded audio data.
     pub audio: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SpeechUsage {
     /// Number of input tokens in the prompt.
     pub input_tokens: u32,
@@ -30,12 +33,14 @@ pub struct SpeechUsage {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct SpeechAudioDoneEvent {
     /// Token usage statistics for the request.
     pub usage: SpeechUsage,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionTextSegmentEvent {
     /// Unique identifier for the segment.
     pub id: String,
@@ -50,6 +55,7 @@ pub struct TranscriptionTextSegmentEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionTextDeltaEvent {
     /// The text delta that was additionally transcribed.
     pub delta: String,
@@ -63,6 +69,7 @@ pub struct TranscriptionTextDeltaEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionTextDoneEvent {
     /// The text that was transcribed.
     pub text: String,
@@ -75,6 +82,7 @@ pub struct TranscriptionTextDoneEvent {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum CreateTranscriptionResponseStreamEvent {
     /// Emitted when a diarized transcription returns a completed segment with speaker information. Only

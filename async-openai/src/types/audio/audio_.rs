@@ -8,6 +8,7 @@ use crate::types::InputSource;
 
 /// A custom voice reference, identified by its voice ID.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct CustomVoiceRef {
     /// The custom voice ID, e.g. `voice_1234`.
     pub id: String,
@@ -16,6 +17,7 @@ pub struct CustomVoiceRef {
 // openapi spec type: VoiceIdsOrCustomVoice
 // anyOf[VoiceIdsShared, CustomVoiceRef]
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum Voice {
     #[default]
@@ -45,6 +47,7 @@ pub struct AudioInput {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum AudioResponseFormat {
     #[default]
@@ -57,6 +60,7 @@ pub enum AudioResponseFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TranslationResponseFormat {
     #[default]
@@ -68,6 +72,7 @@ pub enum TranslationResponseFormat {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum SpeechResponseFormat {
     #[default]
@@ -80,6 +85,7 @@ pub enum SpeechResponseFormat {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub enum SpeechModel {
     #[default]
     #[serde(rename = "tts-1")]
@@ -93,6 +99,7 @@ pub enum SpeechModel {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum TimestampGranularity {
     Word,
@@ -179,6 +186,7 @@ pub struct CreateTranscriptionRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TranscriptionChunkingStrategy {
     #[default]
@@ -188,6 +196,7 @@ pub enum TranscriptionChunkingStrategy {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum VadConfigType {
     #[default]
@@ -195,6 +204,7 @@ pub enum VadConfigType {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct VadConfig {
     pub r#type: VadConfigType,
     /// Amount of audio to include before the VAD detected speech (in milliseconds). Default: 300.
@@ -215,6 +225,7 @@ pub struct VadConfig {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum TranscriptionInclude {
     Logprobs,
@@ -223,6 +234,7 @@ pub enum TranscriptionInclude {
 /// Represents a transcription response returned by model, based on the provided
 /// input.
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranscriptionResponseJson {
     /// The transcribed text.
     pub text: String,
@@ -236,12 +248,14 @@ pub struct CreateTranscriptionResponseJson {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum CreateTranscriptionResponseDiarizedJsonTask {
     Transcribe,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranscriptionResponseDiarizedJson {
     /// The type of task that was run. Always `transcribe`.
     pub task: Option<CreateTranscriptionResponseDiarizedJsonTask>,
@@ -262,6 +276,7 @@ pub struct CreateTranscriptionResponseDiarizedJson {
 /// Represents a verbose json transcription response returned by model, based on
 /// the provided input.
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranscriptionResponseVerboseJson {
     /// The language of the input audio.
     pub language: String,
@@ -285,6 +300,7 @@ pub struct CreateTranscriptionResponseVerboseJson {
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionWord {
     /// The text content of the word.
     pub word: String,
@@ -297,12 +313,14 @@ pub struct TranscriptionWord {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub enum TranscriptionDiarizedSegmentType {
     #[serde(rename = "transcript.text.segment")]
     TranscriptTextSegment,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionDiarizedSegment {
     /// The type of the segment. Always `transcript.text.segment`.
     pub r#type: TranscriptionDiarizedSegmentType,
@@ -326,6 +344,7 @@ pub struct TranscriptionDiarizedSegment {
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct TranscriptionSegment {
     /// Unique identifier of the segment.
     pub id: u32,
@@ -362,6 +381,7 @@ pub struct TranscriptionSegment {
 }
 
 #[derive(Clone, Default, Debug, Builder, PartialEq, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateSpeechRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -401,6 +421,7 @@ pub struct CreateSpeechRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum StreamFormat {
     #[default]
@@ -437,11 +458,13 @@ pub struct CreateTranslationRequest {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranslationResponseJson {
     pub text: String,
 }
 
 #[derive(Debug, Deserialize, Clone, Serialize)]
+#[derive(utoipa::ToSchema)]
 pub struct CreateTranslationResponseVerboseJson {
     /// The language of the output translation (always `english`).
     pub language: String,
@@ -461,6 +484,7 @@ pub struct CreateSpeechResponse {
 
 /// A consent recording used to authorize creation of a custom voice.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct VoiceConsentResource {
     /// The object type, which is always `audio.voice_consent`.
     pub object: String,
@@ -494,6 +518,7 @@ pub struct CreateVoiceConsentRequest {
 
 /// Request to update a voice consent recording (metadata only).
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UpdateVoiceConsentRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -506,6 +531,7 @@ pub struct UpdateVoiceConsentRequest {
 
 /// The voice consent deletion object.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct VoiceConsentDeletedResource {
     /// The consent recording identifier.
     pub id: String,
@@ -517,6 +543,7 @@ pub struct VoiceConsentDeletedResource {
 
 /// The voice consent list object.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct VoiceConsentListResource {
     /// The object type, which is always `list`.
     pub object: String,
@@ -534,6 +561,7 @@ pub struct VoiceConsentListResource {
 
 /// A custom voice that can be used for audio output.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct VoiceResource {
     /// The object type, which is always `audio.voice`.
     pub object: String,

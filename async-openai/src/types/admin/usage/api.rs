@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Query parameters for organization usage endpoints.
 #[derive(Debug, Clone, Serialize, Default, Builder)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "UsageQueryParamsArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -46,6 +47,7 @@ pub struct UsageQueryParams {
 
 /// Width of each time bucket in response.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum UsageBucketWidth {
     #[serde(rename = "1m")]
@@ -58,6 +60,7 @@ pub enum UsageBucketWidth {
 
 /// Fields to group usage data by.
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum UsageGroupBy {
     ProjectId,

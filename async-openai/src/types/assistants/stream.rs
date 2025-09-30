@@ -26,6 +26,7 @@ use crate::types::assistants::{
 /// integrate the Assistants API with streaming.
 
 #[derive(Debug, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "event", content = "data")]
 pub enum AssistantStreamEvent {
     /// Occurs when a new [thread](https://platform.openai.com/docs/api-reference/threads/object) is created.

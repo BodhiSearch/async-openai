@@ -8,6 +8,7 @@ use crate::error::OpenAIError;
 use crate::types::assistants::{ImageDetail, ImageUrl};
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq, Default)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum MessageRole {
     #[default]
@@ -16,6 +17,7 @@ pub enum MessageRole {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum MessageStatus {
     InProgress,
@@ -24,6 +26,7 @@ pub enum MessageStatus {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum MessageIncompleteDetailsType {
     ContentFilter,
@@ -34,6 +37,7 @@ pub enum MessageIncompleteDetailsType {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageIncompleteDetails {
     /// The reason the message is incomplete.
     pub reason: MessageIncompleteDetailsType,
@@ -41,6 +45,7 @@ pub struct MessageIncompleteDetails {
 
 ///  Represents a message within a [thread](https://platform.openai.com/docs/api-reference/threads).
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageObject {
     /// The identifier, which can be referenced in API endpoints.
     pub id: String,
@@ -82,6 +87,7 @@ pub struct MessageObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageAttachment {
     /// The ID of the file to attach to the message.
     pub file_id: String,
@@ -90,6 +96,7 @@ pub struct MessageAttachment {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageAttachmentTool {
@@ -98,6 +105,7 @@ pub enum MessageAttachmentTool {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageContent {
@@ -108,17 +116,20 @@ pub enum MessageContent {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentRefusalObject {
     pub refusal: String,
 }
 
 /// The text content that is part of a message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentTextObject {
     pub text: TextData,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct TextData {
     /// The data that makes up the text.
     pub value: String,
@@ -126,6 +137,7 @@ pub struct TextData {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageContentTextAnnotations {
@@ -137,6 +149,7 @@ pub enum MessageContentTextAnnotations {
 
 /// A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "file_search" tool to search files.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentTextAnnotationsFileCitationObject {
     /// The text in the message content that needs to be replaced.
     pub text: String,
@@ -146,6 +159,7 @@ pub struct MessageContentTextAnnotationsFileCitationObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FileCitation {
     /// The ID of the specific File the citation is from.
     pub file_id: String,
@@ -154,6 +168,7 @@ pub struct FileCitation {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentTextAnnotationsFilePathObject {
     /// The text in the message content that needs to be replaced.
     pub text: String,
@@ -163,6 +178,7 @@ pub struct MessageContentTextAnnotationsFilePathObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct FilePath {
     /// The ID of the file that was generated.
     pub file_id: String,
@@ -170,11 +186,13 @@ pub struct FilePath {
 
 /// References an image [File](https://platform.openai.com/docs/api-reference/files) in the content of a message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentImageFileObject {
     pub image_file: ImageFile,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ImageFile {
     /// The [File](https://platform.openai.com/docs/api-reference/files) ID of the image in the message content. Set `purpose="vision"` when uploading the File if you need to later display the file content.
     pub file_id: String,
@@ -184,17 +202,20 @@ pub struct ImageFile {
 
 /// References an image URL in the content of a message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageContentImageUrlObject {
     pub image_url: ImageUrl,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageRequestContentTextObject {
     /// Text content to be sent to the model
     pub text: String,
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(untagged)]
 pub enum CreateMessageRequestContent {
     /// The text contents of the message.
@@ -204,6 +225,7 @@ pub enum CreateMessageRequestContent {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageContentInput {
@@ -212,6 +234,7 @@ pub enum MessageContentInput {
     ImageUrl(MessageContentImageUrlObject),
 }
 #[derive(Clone, Serialize, Default, Debug, Deserialize, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "CreateMessageRequestArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -233,12 +256,14 @@ pub struct CreateMessageRequest {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ModifyMessageRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<HashMap<String, serde_json::Value>>,
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct DeleteMessageResponse {
     pub id: String,
     pub deleted: bool,
@@ -246,6 +271,7 @@ pub struct DeleteMessageResponse {
 }
 
 #[derive(Clone, Serialize, Default, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct ListMessagesResponse {
     pub object: String,
     pub data: Vec<MessageObject>,
@@ -256,6 +282,7 @@ pub struct ListMessagesResponse {
 
 /// Represents a message delta i.e. any changed fields on a message during streaming.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaObject {
     /// The identifier of the message, which can be referenced in API endpoints.
     pub id: String,
@@ -266,6 +293,7 @@ pub struct MessageDeltaObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDelta {
     /// The entity that produced the message. One of `user` or `assistant`.
     pub role: Option<MessageRole>,
@@ -274,6 +302,7 @@ pub struct MessageDelta {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageDeltaContent {
@@ -284,6 +313,7 @@ pub enum MessageDeltaContent {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentRefusalObject {
     /// The index of the refusal part in the message.
     pub index: u32,
@@ -292,6 +322,7 @@ pub struct MessageDeltaContentRefusalObject {
 
 /// The text content that is part of a message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentTextObject {
     /// The index of the content part in the message.
     pub index: u32,
@@ -299,6 +330,7 @@ pub struct MessageDeltaContentTextObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentText {
     /// The data that makes up the text.
     pub value: Option<String>,
@@ -306,6 +338,7 @@ pub struct MessageDeltaContentText {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum MessageDeltaContentTextAnnotations {
@@ -315,6 +348,7 @@ pub enum MessageDeltaContentTextAnnotations {
 
 /// A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "file_search" tool to search files.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentTextAnnotationsFileCitationObject {
     /// The index of the annotation in the text content part.
     pub index: u32,
@@ -327,6 +361,7 @@ pub struct MessageDeltaContentTextAnnotationsFileCitationObject {
 
 /// A URL for the file that's generated when the assistant used the `code_interpreter` tool to generate a file.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentTextAnnotationsFilePathObject {
     /// The index of the annotation in the text content part.
     pub index: u32,
@@ -339,6 +374,7 @@ pub struct MessageDeltaContentTextAnnotationsFilePathObject {
 
 /// References an image [File](https://platform.openai.com/docs/api-reference/files) in the content of a message.
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentImageFileObject {
     /// The index of the content part in the message.
     pub index: u32,
@@ -347,6 +383,7 @@ pub struct MessageDeltaContentImageFileObject {
 }
 
 #[derive(Clone, Serialize, Debug, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct MessageDeltaContentImageUrlObject {
     /// The index of the content part in the message.
     pub index: u32,

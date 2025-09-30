@@ -4,6 +4,7 @@ use serde::Serialize;
 
 /// Query parameters for listing audit logs.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListAuditLogsQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -12,6 +13,7 @@ use serde::Serialize;
 pub struct ListAuditLogsQuery {
     /// Return only events whose `effective_at` (Unix seconds) is in this range.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[schema(value_type = Option<Object>)]
     pub effective_at: Option<serde_json::Value>,
     /// Return only events for these projects.
     #[serde(skip_serializing_if = "Option::is_none")]

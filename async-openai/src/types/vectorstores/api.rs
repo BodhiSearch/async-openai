@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 /// Sort order for listing vector stores.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListVectorStoresOrder {
     /// Ascending order
@@ -14,6 +15,7 @@ pub enum ListVectorStoresOrder {
 
 /// Query parameters for listing vector stores.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListVectorStoresQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -36,6 +38,7 @@ pub struct ListVectorStoresQuery {
 
 /// Sort order for listing files in vector store batch.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListFilesInVectorStoreBatchOrder {
     /// Ascending order
@@ -46,6 +49,7 @@ pub enum ListFilesInVectorStoreBatchOrder {
 
 /// Filter by file status for files in vector store batch.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ListFilesInVectorStoreBatchFilter {
     /// In progress status
@@ -60,6 +64,7 @@ pub enum ListFilesInVectorStoreBatchFilter {
 
 /// Query parameters for listing files in vector store batch.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListFilesInVectorStoreBatchQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]
@@ -85,6 +90,7 @@ pub struct ListFilesInVectorStoreBatchQuery {
 
 /// Sort order for listing vector store files.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum ListVectorStoreFilesOrder {
     /// Ascending order
@@ -95,6 +101,7 @@ pub enum ListVectorStoreFilesOrder {
 
 /// Filter by file status for vector store files.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ListVectorStoreFilesFilter {
     /// In progress status
@@ -109,6 +116,7 @@ pub enum ListVectorStoreFilesFilter {
 
 /// Query parameters for listing vector store files.
 #[derive(Debug, Serialize, Default, Clone, Builder, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[builder(name = "ListVectorStoreFilesQueryArgs")]
 #[builder(pattern = "mutable")]
 #[builder(setter(into, strip_option), default)]

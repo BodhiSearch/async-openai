@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::types::realtime::{RealtimeConversationItem, RealtimeResponseCreateParams, Session};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventSessionUpdate {
     /// Optional client-generated ID used to identify this event.
     /// This is an arbitrary string that a client may assign. It will be passed
@@ -15,6 +16,7 @@ pub struct RealtimeClientEventSessionUpdate {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventInputAudioBufferAppend {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -25,6 +27,7 @@ pub struct RealtimeClientEventInputAudioBufferAppend {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventInputAudioBufferCommit {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -32,6 +35,7 @@ pub struct RealtimeClientEventInputAudioBufferCommit {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventInputAudioBufferClear {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,6 +43,7 @@ pub struct RealtimeClientEventInputAudioBufferClear {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventConversationItemCreate {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -57,6 +62,7 @@ pub struct RealtimeClientEventConversationItemCreate {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventConversationItemRetrieve {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -67,6 +73,7 @@ pub struct RealtimeClientEventConversationItemRetrieve {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventConversationItemTruncate {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -84,6 +91,7 @@ pub struct RealtimeClientEventConversationItemTruncate {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventConversationItemDelete {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -94,6 +102,7 @@ pub struct RealtimeClientEventConversationItemDelete {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventResponseCreate {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -104,6 +113,7 @@ pub struct RealtimeClientEventResponseCreate {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventResponseCancel {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -116,6 +126,7 @@ pub struct RealtimeClientEventResponseCancel {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[derive(utoipa::ToSchema)]
 pub struct RealtimeClientEventOutputAudioBufferClear {
     /// Optional client-generated ID used to identify this event.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -124,6 +135,7 @@ pub struct RealtimeClientEventOutputAudioBufferClear {
 
 /// These are events that the OpenAI Realtime WebSocket server will accept from the client.
 #[derive(Debug, Serialize, Deserialize)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type")]
 pub enum RealtimeClientEvent {
     /// Send this event to update the session's configuration. The client may send this event at any time to update any field

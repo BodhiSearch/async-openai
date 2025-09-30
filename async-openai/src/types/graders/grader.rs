@@ -5,6 +5,7 @@ use crate::types::graders::ReasoningEffort;
 
 /// String check operation.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "lowercase")]
 pub enum GraderStringCheckOperation {
     /// Equal.
@@ -19,6 +20,7 @@ pub enum GraderStringCheckOperation {
 
 /// String check grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderStringCheck {
     /// The name of the grader.
     pub name: String,
@@ -32,6 +34,7 @@ pub struct GraderStringCheck {
 
 /// Text similarity grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderTextSimilarity {
     /// The name of the grader.
     pub name: String,
@@ -45,6 +48,7 @@ pub struct GraderTextSimilarity {
 
 /// Text similarity metric.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum GraderTextSimilarityEvaluationMetric {
     Cosine,
@@ -62,6 +66,7 @@ pub enum GraderTextSimilarityEvaluationMetric {
 
 /// Python grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderPython {
     /// The name of the grader.
     pub name: String,
@@ -73,6 +78,7 @@ pub struct GraderPython {
 
 /// Score model grader.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderScoreModel {
     /// The name of the grader.
     pub name: String,
@@ -90,6 +96,7 @@ pub struct GraderScoreModel {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderScoreModelSamplingParams {
     /// A seed value to initialize the randomness, during sampling.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -109,6 +116,7 @@ pub struct GraderScoreModelSamplingParams {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderLabelModel {
     /// The name of the grader.
     pub name: String,
@@ -123,6 +131,7 @@ pub struct GraderLabelModel {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum Graders {
     StringCheck(GraderStringCheck),
@@ -133,6 +142,7 @@ pub enum Graders {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
+#[derive(utoipa::ToSchema)]
 pub struct GraderMulti {
     /// The name of the grader.
     pub name: String,
